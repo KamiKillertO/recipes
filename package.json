@@ -1,0 +1,16 @@
+{
+  "name": "recipevault",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nx serve",
+    "build": "nx build",
+    "test": "nx test"
+  },
+  "devDependencies": {
+    "@nx/js": "^22.7.1",
+    "@nx/workspace": "^22.7.1",
+    "nx": "^22.7.1",
+    "nx-go": "^0.0.8"
+  }
+}

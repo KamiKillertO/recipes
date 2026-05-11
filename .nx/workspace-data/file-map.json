@@ -1,0 +1,96 @@
+{
+  "version": "6.0",
+  "nxVersion": "22.7.1",
+  "pathMappings": {},
+  "nxJsonPlugins": [],
+  "fileMap": {
+    "nonProjectFiles": [
+      {
+        "file": ".gitignore",
+        "hash": "5024484321055293047"
+      },
+      {
+        "file": ".local/share/opencode/plans/SPEC.md",
+        "hash": "13372512921577399167"
+      },
+      {
+        "file": "AGENT.md",
+        "hash": "18209351453118593863"
+      },
+      {
+        "file": "api/cmd/api/main.go",
+        "hash": "10299137958256965063"
+      },
+      {
+        "file": "api/go.mod",
+        "hash": "4107676730132290275"
+      },
+      {
+        "file": "app/.gitignore",
+        "hash": "10530348721903624668"
+      },
+      {
+        "file": "app/App.tsx",
+        "hash": "13988327922907897129"
+      },
+      {
+        "file": "app/app.json",
+        "hash": "14815168589375928254"
+      },
+      {
+        "file": "app/assets/adaptive-icon.png",
+        "hash": "16102135492459408350"
+      },
+      {
+        "file": "app/assets/favicon.png",
+        "hash": "10556792184362654649"
+      },
+      {
+        "file": "app/assets/icon.png",
+        "hash": "14252482080276080187"
+      },
+      {
+        "file": "app/assets/splash-icon.png",
+        "hash": "16102135492459408350"
+      },
+      {
+        "file": "app/index.ts",
+        "hash": "16528171701554453975"
+      },
+      {
+        "file": "app/package-lock.json",
+        "hash": "8805336576273978475"
+      },
+      {
+        "file": "app/package.json",
+        "hash": "17617468784424892296"
+      },
+      {
+        "file": "app/tsconfig.json",
+        "hash": "18388439864924501195"
+      },
+      {
+        "file": "mise.toml",
+        "hash": "14072104291482665999"
+      },
+      {
+        "file": "nx.json",
+        "hash": "13568940503476541788"
+      },
+      {
+        "file": "package-lock.json",
+        "hash": "12407927006577351299"
+      },
+      {
+        "file": "package.json",
+        "hash": "14488352710228024935"
+      },
+      {
+        "file": "workspace.json",
+        "hash": "15628037903111819040"
+      }
+    ],
+    "projectFileMap": {}
+  },
+  "externalNodesHash": "8878475979141000560"
+}
