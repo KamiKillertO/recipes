@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, View, FlatList, TouchableOpacity, TextInput, ActivityIndicator, Text } from 'react-native';
 import { Link, useRouter } from 'expo-router';
-import { useRecipeStore } from '../src/lib/recipeStore';
-import { useAuthStore } from '../src/lib/authStore';
+import { useRecipeStore } from '../../src/lib/recipeStore';
+import { useAuthStore } from '../../src/lib/authStore';
 
 export default function RecipesScreen() {
   const router = useRouter();
