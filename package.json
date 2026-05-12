@@ -3,28 +3,40 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nx serve app",
-    "start:web": "nx serve app --configuration=web",
-    "start:api": "nx serve api",
-    "start:all": "concurrently \"nx serve api\" \"nx serve app\"",
-    "build": "nx build",
-    "build:api": "nx build api",
-    "build:app": "nx build app",
-    "test": "nx run-many -t test",
-    "test:api": "nx test api",
-    "test:app": "nx test app",
+    "start": "npm run start:web",
+    "start:web": "cd app && npx expo start --web",
+    "start:android": "cd app && npx expo start --android",
+    "start:ios": "cd app && npx expo start --ios",
+    "start:api": "cd api && go run ./cmd/api",
+    "start:all": "concurrently \"npm run start:api\" \"npm run start:web\"",
+    "build": "npm run build:api && npm run build:app",
+    "build:api": "cd api && go build -o bin/api ./cmd/api",
+    "build:app": "cd app && npx expo export --platform web",
+    "test": "npm run test:api",
+    "test:api": "cd api && go test ./...",
     "docker:up": "docker-compose -f docker/docker-compose.yml up -d",
     "docker:down": "docker-compose -f docker/docker-compose.yml down",
     "docker:logs": "docker-compose -f docker/docker-compose.yml logs -f",
     "docker:rebuild": "docker-compose -f docker/docker-compose.yml up -d --build",
-    "dev": "npm run docker:up && npm run start:all",
-    "lint": "nx run-many -t lint"
+    "dev": "npm run docker:up && concurrently \"npm run start:api\" \"npm run start:web\""
   },
   "devDependencies": {
-    "@nx/js": "^22.7.1",
-    "@nx/workspace": "^22.7.1",
-    "nx": "^22.7.1",
+    "@expo/cli": "~54.0.16",
+    "@nx-go/nx-go": "^4.0.0",
+    "@nx/docker": "22.7.1",
+    "@nx/expo": "22.7.1",
+    "@nx/react-native": "22.7.1",
+    "concurrently": "^9.1.0",
+    "metro-config": "~0.83.0",
+    "metro-resolver": "~0.83.0",
+    "nx": "22.7.1"
+  },
+  "dependencies": {
+    "expo": "~54.0.0",
     "nx-go": "^0.0.8",
-    "concurrently": "^9.1.0"
-  }
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-native": "0.81.5"
+  },
+  "nx": {}
 }

@@ -1,0 +1,28 @@
+{
+  "name": "app",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "app",
+  "projectType": "application",
+  "targets": {
+    "serve": {
+      "executor": "@nx/expo:start",
+      "options": {
+        "port": 8081
+      },
+      "configurations": {
+        "web": { "platform": "web" },
+        "android": { "platform": "android" },
+        "ios": { "platform": "ios" }
+      },
+      "defaultConfiguration": "web"
+    },
+    "build": {
+      "executor": "@nx/expo:build",
+      "options": {},
+      "configurations": {
+        "production": {}
+      },
+      "defaultConfiguration": "production"
+    }
+  }
+}
