@@ -14,6 +14,9 @@ export default function LoginScreen() {
     try {
       if (isRegistering) {
         await register(username, password);
+        setUsername("");
+        setPassword("");
+        setIsRegistering(false);
       } else {
         await login(username, password);
       }
