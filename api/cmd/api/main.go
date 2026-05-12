@@ -19,7 +19,7 @@ func main() {
 	connStr := fmt.Sprintf(
 		"user=%s password=%s dbname=%s host=%s port=%s sslmode=disable",
 		getEnv("DB_USER", "recipevault"),
-		getEnv("DB_PASSWORD", "password"),
+		getEnv("DB_PASSWORD", "recipevault"),
 		getEnv("DB_NAME", "recipevault"),
 		getEnv("DB_HOST", "localhost"),
 		getEnv("DB_PORT", "5432"),
