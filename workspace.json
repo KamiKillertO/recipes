@@ -34,20 +34,36 @@
       "root": "app",
       "targets": {
         "serve": {
-          "executor": "@nx/expo:serve",
+          "executor": "@nx/expo:start",
           "options": {
             "port": 8081
           },
           "configurations": {
-            "production": {}
+            "web": {
+              "platform": "web"
+            },
+            "android": {
+              "platform": "android"
+            },
+            "ios": {
+              "platform": "ios"
+            }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "web"
         },
         "build": {
           "executor": "@nx/expo:build",
           "options": {},
           "configurations": {
             "production": {}
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "executor": "@nx/jest:jest",
+          "options": {
+            "jestConfig": "app/jest.config.js",
+            "passWithNoTests": true
           }
         }
       }
@@ -56,9 +72,9 @@
       "root": "api",
       "targets": {
         "serve": {
-          "executor": "nx-go:serve",
+          "executor": "nx-go:run",
           "options": {
-            "port": 8080
+            "main": "cmd/api/main.go"
           }
         },
         "build": {
@@ -68,6 +84,13 @@
         "test": {
           "executor": "nx-go:test",
           "options": {}
+        },
+        "migrate": {
+          "executor": "nx:run-commands",
+          "options": {
+            "command": "docker-compose -f docker/docker-compose.yml up db && sleep 5 && docker exec recipevault-db-1 psql -U recipevault -d recipevault -f /docker-entrypoint-initdb.d/001_initial_schema.sql || echo 'Migration skipped'",
+            " cwd": "."
+          }
         }
       }
     }

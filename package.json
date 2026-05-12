@@ -3,14 +3,28 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nx serve",
+    "start": "nx serve app",
+    "start:web": "nx serve app --configuration=web",
+    "start:api": "nx serve api",
+    "start:all": "concurrently \"nx serve api\" \"nx serve app\"",
     "build": "nx build",
-    "test": "nx test"
+    "build:api": "nx build api",
+    "build:app": "nx build app",
+    "test": "nx run-many -t test",
+    "test:api": "nx test api",
+    "test:app": "nx test app",
+    "docker:up": "docker-compose -f docker/docker-compose.yml up -d",
+    "docker:down": "docker-compose -f docker/docker-compose.yml down",
+    "docker:logs": "docker-compose -f docker/docker-compose.yml logs -f",
+    "docker:rebuild": "docker-compose -f docker/docker-compose.yml up -d --build",
+    "dev": "npm run docker:up && npm run start:all",
+    "lint": "nx run-many -t lint"
   },
   "devDependencies": {
     "@nx/js": "^22.7.1",
     "@nx/workspace": "^22.7.1",
     "nx": "^22.7.1",
-    "nx-go": "^0.0.8"
+    "nx-go": "^0.0.8",
+    "concurrently": "^9.1.0"
   }
 }

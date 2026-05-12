@@ -2305,6 +2305,41 @@
     "type": "static"
   },
   {
+    "source": "npm:concurrently",
+    "target": "npm:chalk",
+    "type": "static"
+  },
+  {
+    "source": "npm:concurrently",
+    "target": "npm:rxjs",
+    "type": "static"
+  },
+  {
+    "source": "npm:concurrently",
+    "target": "npm:shell-quote",
+    "type": "static"
+  },
+  {
+    "source": "npm:concurrently",
+    "target": "npm:supports-color@8.1.1",
+    "type": "static"
+  },
+  {
+    "source": "npm:concurrently",
+    "target": "npm:tree-kill",
+    "type": "static"
+  },
+  {
+    "source": "npm:concurrently",
+    "target": "npm:yargs",
+    "type": "static"
+  },
+  {
+    "source": "npm:supports-color@8.1.1",
+    "target": "npm:has-flag",
+    "type": "static"
+  },
+  {
     "source": "npm:core-js-compat",
     "target": "npm:browserslist",
     "type": "static"
@@ -3352,6 +3387,11 @@
   {
     "source": "npm:restore-cursor",
     "target": "npm:signal-exit",
+    "type": "static"
+  },
+  {
+    "source": "npm:rxjs",
+    "target": "npm:tslib",
     "type": "static"
   },
   {
