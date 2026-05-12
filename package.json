@@ -8,7 +8,7 @@
     "start:android": "cd app && npx expo start --android",
     "start:ios": "cd app && npx expo start --ios",
     "start:api": "cd api && go run ./cmd/api",
-    "start:all": "concurrently \"npm run start:api\" \"npm run start:web\"",
+    "start:all": "npm run docker:up && concurrently \"npm run start:api\" \"npm run start:web\"",
     "build": "npm run build:api && npm run build:app",
     "build:api": "cd api && go build -o bin/api ./cmd/api",
     "build:app": "cd app && npx expo export --platform web",
@@ -18,7 +18,7 @@
     "docker:down": "docker-compose -f docker/docker-compose.yml down",
     "docker:logs": "docker-compose -f docker/docker-compose.yml logs -f",
     "docker:rebuild": "docker-compose -f docker/docker-compose.yml up -d --build",
-    "dev": "npm run docker:up && concurrently \"npm run start:api\" \"npm run start:web\""
+    "dev": "npm run start:all"
   },
   "devDependencies": {
     "@expo/cli": "~54.0.16",
