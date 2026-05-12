@@ -1,23 +1,31 @@
 package http
 
 import (
+	"io"
 	"net/http"
+	"os"
+	"path/filepath"
+	"strconv"
+	"time"
 
 	"github.com/google/uuid"
 	"github.com/labstack/echo/v4"
 	"github.com/recipevault/api/internal/application/dto"
 	"github.com/recipevault/api/internal/application/services"
+	"github.com/recipevault/api/internal/infrastructure/ocr"
 )
 
 type Handler struct {
-	authService *services.AuthService
+	authService    *services.AuthService
 	recipeService *services.RecipeService
+	uploadDir     string
 }
 
 func NewHandler(authService *services.AuthService, recipeService *services.RecipeService) *Handler {
 	return &Handler{
-		authService: authService,
+		authService:    authService,
 		recipeService: recipeService,
+		uploadDir:     "/app/uploads",
 	}
 }
 
@@ -124,6 +132,13 @@ func (h *Handler) DeleteRecipe(c echo.Context) error {
 }
 
 func (h *Handler) OCR(c echo.Context) error {
+	dividerX := 50
+	if d := c.FormValue("divider_x"); d != "" {
+		if parsed, err := strconv.Atoi(d); err == nil {
+			dividerX = parsed
+		}
+	}
+
 	file, err := c.FormFile("image")
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]string{"error": "no image file"})
@@ -135,11 +150,30 @@ func (h *Handler) OCR(c echo.Context) error {
 	}
 	defer src.Close()
 
-	// TODO: Implement OCR with Tesseract
-	// For now, return a placeholder response
+	os.MkdirAll(h.uploadDir, 0755)
 	
+	filename := strconv.FormatInt(time.Now().UnixMilli(), 10) + ".jpg"
+	dstPath := filepath.Join(h.uploadDir, filename)
+	
+	dst, err := os.Create(dstPath)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
+	}
+	defer dst.Close()
+
+	if _, err := io.Copy(dst, src); err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
+	}
+
+	result, err := ocr.ProcessImage(dstPath, dividerX)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
+	}
+
 	return c.JSON(http.StatusOK, dto.OCRResponse{
-		Text: "OCR functionality coming soon. Please enter the recipe manually for now.",
+		FullText:     result.FullText,
+		Ingredients:  result.Ingredients,
+		Instructions: result.Instructions,
 	})
 }
 
@@ -155,9 +189,22 @@ func (h *Handler) UploadImage(c echo.Context) error {
 	}
 	defer src.Close()
 
-	// TODO: Save file and return URL
-	
+	os.MkdirAll(h.uploadDir, 0755)
+
+	filename := strconv.FormatInt(time.Now().UnixMilli(), 10) + "_" + file.Filename
+	dstPath := filepath.Join(h.uploadDir, filename)
+
+	dst, err := os.Create(dstPath)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
+	}
+	defer dst.Close()
+
+	if _, err := io.Copy(dst, src); err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
+	}
+
 	return c.JSON(http.StatusOK, map[string]string{
-		"url": "/images/" + file.Filename,
+		"url": "/images/" + filename,
 	})
 }

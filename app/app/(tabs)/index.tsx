@@ -88,6 +88,12 @@ export default function RecipesScreen() {
           <Text style={styles.fabText}>+</Text>
         </TouchableOpacity>
       </Link>
+
+      <Link href="/import" asChild>
+        <TouchableOpacity style={styles.importFab}>
+          <Text style={styles.fabText}>📷</Text>
+        </TouchableOpacity>
+      </Link>
     </View>
   );
 }
@@ -157,6 +163,22 @@ const styles = StyleSheet.create({
     fontSize: 32,
     color: '#fff',
     marginTop: -2,
+  },
+  importFab: {
+    position: 'absolute',
+    right: 16,
+    bottom: 80,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: '#FF6F00',
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 4,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
   },
   authPrompt: {
     flex: 1,

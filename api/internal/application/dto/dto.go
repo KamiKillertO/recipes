@@ -77,5 +77,7 @@ type InstructionDTO struct {
 }
 
 type OCRResponse struct {
-	Text string `json:"text"`
+	FullText     string `json:"full_text"`
+	Ingredients  string `json:"ingredients"`
+	Instructions string `json:"instructions"`
 }

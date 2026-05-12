@@ -57,6 +57,7 @@ func main() {
 	})
 	e.POST("/api/auth/register", handler.Register)
 	e.POST("/api/auth/login", handler.Login)
+	e.POST("/api/ocr", handler.OCR)
 
 	// Protected routes
 	api := e.Group("/api")
@@ -67,7 +68,6 @@ func main() {
 		api.GET("/recipes/:id", handler.GetRecipe)
 		api.PUT("/recipes/:id", handler.UpdateRecipe)
 		api.DELETE("/recipes/:id", handler.DeleteRecipe)
-		api.POST("/ocr", handler.OCR)
 		api.POST("/upload", handler.UploadImage)
 	}
 
