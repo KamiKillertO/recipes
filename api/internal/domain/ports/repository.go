@@ -14,7 +14,7 @@ type UserRepository interface {
 type RecipeRepository interface {
 	Create(recipe *domain.Recipe) error
 	FindByID(id uuid.UUID) (*domain.Recipe, error)
-	FindByUserID(userID uuid.UUID) ([]domain.Recipe, error)
+	FindAll() ([]domain.Recipe, error)
 	Update(recipe *domain.Recipe) error
 	Delete(id uuid.UUID) error
 }

@@ -16,7 +16,7 @@ type User struct {
 
 type Recipe struct {
 	ID           uuid.UUID       `json:"id"`
-	UserID      uuid.UUID       `json:"user_id"`
+	UserID      *uuid.UUID      `json:"user_id,omitempty"`
 	Title       string         `json:"title"`
 	Description string       `json:"description"`
 	ImagePath   string         `json:"image_path,omitempty"`

@@ -107,10 +107,10 @@ func NewRecipeService(recipeRepo ports.RecipeRepository) *RecipeService {
 	return &RecipeService{recipeRepo: recipeRepo}
 }
 
-func (s *RecipeService) Create(userID uuid.UUID, req dto.CreateRecipeRequest) (dto.RecipeDTO, error) {
+func (s *RecipeService) Create(userID *uuid.UUID, req dto.CreateRecipeRequest) (dto.RecipeDTO, error) {
 	recipe := &entities.Recipe{
-		UserID: userID,
-		Title: req.Title,
+		UserID:      userID,
+		Title:       req.Title,
 		Description: req.Description,
 		ImagePath: req.ImagePath,
 		Servings: req.Servings,
@@ -137,8 +137,8 @@ func (s *RecipeService) GetByID(id uuid.UUID) (dto.RecipeDTO, error) {
 	return toRecipeDTO(recipe), nil
 }
 
-func (s *RecipeService) GetByUserID(userID uuid.UUID) ([]dto.RecipeDTO, error) {
-	recipes, err := s.recipeRepo.FindByUserID(userID)
+func (s *RecipeService) GetAll() ([]dto.RecipeDTO, error) {
+	recipes, err := s.recipeRepo.FindAll()
 	if err != nil {
 		return nil, err
 	}
@@ -150,14 +150,10 @@ func (s *RecipeService) GetByUserID(userID uuid.UUID) ([]dto.RecipeDTO, error) {
 	return dtos, nil
 }
 
-func (s *RecipeService) Update(id uuid.UUID, userID uuid.UUID, req dto.UpdateRecipeRequest) (dto.RecipeDTO, error) {
+func (s *RecipeService) Update(id uuid.UUID, req dto.UpdateRecipeRequest) (dto.RecipeDTO, error) {
 	recipe, err := s.recipeRepo.FindByID(id)
 	if err != nil {
 		return dto.RecipeDTO{}, err
-	}
-
-	if recipe.UserID != userID {
-		return dto.RecipeDTO{}, errors.New("unauthorized")
 	}
 
 	recipe.Title = req.Title
@@ -177,16 +173,7 @@ func (s *RecipeService) Update(id uuid.UUID, userID uuid.UUID, req dto.UpdateRec
 	return toRecipeDTO(recipe), nil
 }
 
-func (s *RecipeService) Delete(id uuid.UUID, userID uuid.UUID) error {
-	recipe, err := s.recipeRepo.FindByID(id)
-	if err != nil {
-		return err
-	}
-
-	if recipe.UserID != userID {
-		return errors.New("unauthorized")
-	}
-
+func (s *RecipeService) Delete(id uuid.UUID) error {
 	return s.recipeRepo.Delete(id)
 }
 

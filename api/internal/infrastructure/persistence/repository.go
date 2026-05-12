@@ -98,9 +98,9 @@ func (r *PostgresRecipeRepository) FindByID(id uuid.UUID) (*entities.Recipe, err
 	return &recipe, nil
 }
 
-func (r *PostgresRecipeRepository) FindByUserID(userID uuid.UUID) ([]entities.Recipe, error) {
-	query := `SELECT id, user_id, title, description, image_path, servings, prep_time, cook_time, source_type, ingredients, instructions, tags, created_at, updated_at FROM recipes WHERE user_id = $1 ORDER BY created_at DESC`
-	rows, err := r.db.QueryContext(context.Background(), query, userID)
+func (r *PostgresRecipeRepository) FindAll() ([]entities.Recipe, error) {
+	query := `SELECT id, user_id, title, description, image_path, servings, prep_time, cook_time, source_type, ingredients, instructions, tags, created_at, updated_at FROM recipes ORDER BY created_at DESC`
+	rows, err := r.db.QueryContext(context.Background(), query)
 	if err != nil {
 		return nil, err
 	}
@@ -109,13 +109,15 @@ func (r *PostgresRecipeRepository) FindByUserID(userID uuid.UUID) ([]entities.Re
 	var recipes []entities.Recipe
 	for rows.Next() {
 		var recipe entities.Recipe
-		err := rows.Scan(&recipe.ID, &recipe.UserID, &recipe.Title, &recipe.Description,
+		var userID *uuid.UUID
+		err := rows.Scan(&recipe.ID, &userID, &recipe.Title, &recipe.Description,
 			&recipe.ImagePath, &recipe.Servings, &recipe.PrepTime, &recipe.CookTime,
 			&recipe.SourceType, &recipe.Ingredients, &recipe.Instructions, &recipe.Tags,
 			&recipe.CreatedAt, &recipe.UpdatedAt)
 		if err != nil {
 			return nil, err
 		}
+		recipe.UserID = userID
 		recipes = append(recipes, recipe)
 	}
 	return recipes, nil

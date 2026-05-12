@@ -3,6 +3,7 @@ package http
 import (
 	"net/http"
 
+	"github.com/google/uuid"
 	"github.com/labstack/echo/v4"
 	"github.com/recipevault/api/internal/application/dto"
 	"github.com/recipevault/api/internal/application/services"
@@ -49,9 +50,7 @@ func (h *Handler) Login(c echo.Context) error {
 }
 
 func (h *Handler) ListRecipes(c echo.Context) error {
-	userID := c.Get("user_id").(string)
-	
-	recipes, err := h.recipeService.GetByUserID(parseUUID(userID))
+	recipes, err := h.recipeService.GetAll()
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
 	}
@@ -60,14 +59,26 @@ func (h *Handler) ListRecipes(c echo.Context) error {
 }
 
 func (h *Handler) CreateRecipe(c echo.Context) error {
-	userID := c.Get("user_id").(string)
+	var userID *string
+	if uid := c.Get("user_id"); uid != nil {
+		if s, ok := uid.(string); ok {
+			userID = &s
+		}
+	}
+
 	var req dto.CreateRecipeRequest
 
 	if err := c.Bind(&req); err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]string{"error": err.Error()})
 	}
 
-	resp, err := h.recipeService.Create(parseUUID(userID), req)
+	var puuid *uuid.UUID
+	if userID != nil {
+		id := parseUUID(*userID)
+		puuid = &id
+	}
+
+	resp, err := h.recipeService.Create(puuid, req)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
 	}
@@ -88,14 +99,13 @@ func (h *Handler) GetRecipe(c echo.Context) error {
 
 func (h *Handler) UpdateRecipe(c echo.Context) error {
 	id := c.Param("id")
-	userID := c.Get("user_id").(string)
 	var req dto.UpdateRecipeRequest
 
 	if err := c.Bind(&req); err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]string{"error": err.Error()})
 	}
 
-	resp, err := h.recipeService.Update(parseUUID(id), parseUUID(userID), req)
+	resp, err := h.recipeService.Update(parseUUID(id), req)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
 	}
@@ -105,9 +115,8 @@ func (h *Handler) UpdateRecipe(c echo.Context) error {
 
 func (h *Handler) DeleteRecipe(c echo.Context) error {
 	id := c.Param("id")
-	userID := c.Get("user_id").(string)
 
-	if err := h.recipeService.Delete(parseUUID(id), parseUUID(userID)); err != nil {
+	if err := h.recipeService.Delete(parseUUID(id)); err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
 	}
 
