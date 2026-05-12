@@ -11,17 +11,17 @@
 
 ## 2. Technology Stack
 
-| Component | Technology |
-|-----------|-------------|
-| Framework | Expo SDK 52 (React Native + Web) |
-| Language | TypeScript |
-| Backend | Supabase (PostgreSQL, Auth, Storage) |
-| State Management | Zustand |
-| Navigation | Expo Router |
-| UI Components | React Native Paper |
-| OCR | expo-ml-kit (local) |
-| Image Picker | expo-image-picker |
-| Sharing | expo-sharing / expo-web-browser |
+| Component        | Technology                           |
+| ---------------- | ------------------------------------ |
+| Framework        | Expo SDK 52 (React Native + Web)     |
+| Language         | TypeScript                           |
+| Backend          | Supabase (PostgreSQL, Auth, Storage) |
+| State Management | Zustand                              |
+| Navigation       | Expo Router                          |
+| UI Components    | React Native Paper                   |
+| OCR              | expo-ml-kit (local)                  |
+| Image Picker     | expo-image-picker                    |
+| Sharing          | expo-sharing / expo-web-browser      |
 
 ---
 
@@ -30,6 +30,7 @@
 ### Tables
 
 **profiles**
+
 ```sql
 id: uuid (PK, references auth.users)
 username: text
@@ -39,6 +40,7 @@ updated_at: timestamptz
 ```
 
 **recipes**
+
 ```sql
 id: uuid (PK)
 user_id: uuid (FK → profiles.id)
@@ -59,6 +61,7 @@ updated_at: timestamptz
 ```
 
 **grocery_lists**
+
 ```sql
 id: uuid (PK)
 user_id: uuid (FK → profiles.id)
@@ -69,6 +72,7 @@ updated_at: timestamptz
 ```
 
 **grocery_items**
+
 ```sql
 id: uuid (PK)
 list_id: uuid (FK → grocery_lists.id)
@@ -81,6 +85,7 @@ created_at: timestamptz
 ```
 
 ### Row Level Security (RLS)
+
 - All tables: Users can only access their own data (auth.uid() = user_id)
 - recipes: Allow public recipes to be readable by all authenticated users
 
@@ -89,27 +94,30 @@ created_at: timestamptz
 ## 4. UI/UX Specification
 
 ### Color Palette
-| Role | Color | Hex |
-|------|-------|-----|
-| Primary | Fresh Green | #2E7D32 |
-| Primary Variant | Dark Green | #1B5E20 |
-| Secondary | Warm Orange | #FF6F00 |
-| Background | Off-White | #FAFAFA |
-| Surface | White | #FFFFFF |
-| Error | Red | #D32F2F |
-| Text Primary | Dark Gray | #212121 |
-| Text Secondary | Medium Gray | #757575 |
+
+| Role            | Color       | Hex     |
+| --------------- | ----------- | ------- |
+| Primary         | Fresh Green | #2E7D32 |
+| Primary Variant | Dark Green  | #1B5E20 |
+| Secondary       | Warm Orange | #FF6F00 |
+| Background      | Off-White   | #FAFAFA |
+| Surface         | White       | #FFFFFF |
+| Error           | Red         | #D32F2F |
+| Text Primary    | Dark Gray   | #212121 |
+| Text Secondary  | Medium Gray | #757575 |
 
 ### Typography
-| Element | Font | Size | Weight |
-|---------|------|------|--------|
-| H1 | System | 28px | Bold |
-| H2 | System | 24px | SemiBold |
-| H3 | System | 20px | SemiBold |
-| Body | System | 16px | Regular |
-| Caption | System | 14px | Regular |
+
+| Element | Font   | Size | Weight   |
+| ------- | ------ | ---- | -------- |
+| H1      | System | 28px | Bold     |
+| H2      | System | 24px | SemiBold |
+| H3      | System | 20px | SemiBold |
+| Body    | System | 16px | Regular  |
+| Caption | System | 14px | Regular  |
 
 ### Spacing System (8pt Grid)
+
 - xs: 4px
 - sm: 8px
 - md: 16px
@@ -129,6 +137,7 @@ created_at: timestamptz
 ```
 
 ### Screen 1: Recipes List (Tab 1)
+
 - **Header:** "My Recipes" + Search icon + Add button (FAB)
 - **Search Bar:** Expandable search with filters (tags, time, source)
 - **Recipe Cards:** Grid or list view toggle
@@ -137,6 +146,7 @@ created_at: timestamptz
 - **FAB:** Add new recipe (+)
 
 ### Screen 2: Recipe Detail
+
 - **Hero Image:** Full-width, with back button overlay
 - **Title Section:** Title, Description, Prep/Cook time, Servings
 - **Source Badge:** Icon showing source (manual/URL/OCR/Social)
@@ -145,6 +155,7 @@ created_at: timestamptz
 - **Actions:** Edit, Share, Delete, "Add to Grocery List"
 
 ### Screen 3: Add/Edit Recipe
+
 - **Form Sections:**
   1. Image: Camera/Gallery picker or URL input
   2. Basic Info: Title (required), Description, Servings, Prep/Cook time
@@ -155,6 +166,7 @@ created_at: timestamptz
 - **Actions:** Save, Cancel
 
 ### Screen 4: Import Recipe
+
 - **Import Options:**
   1. Manual: Empty form
   2. From URL: Paste URL → Fetch & parse
@@ -163,6 +175,7 @@ created_at: timestamptz
 - **Preview:** Parsed recipe with editable fields
 
 ### Screen 5: Grocery List (Tab 2)
+
 - **Header:** List name + Date + Actions (Clear, Archive)
 - **Grouped Items:** By category (Produce, Dairy, Meat, Pantry, etc.)
 - **Item Row:** Checkbox, Ingredient, Quantity, Source recipe badge
@@ -170,6 +183,7 @@ created_at: timestamptz
 - **Actions:** Add selected recipe ingredients, Share list
 
 ### Screen 6: Settings (Tab 3)
+
 - **Profile:** Avatar, Username, Edit
 - **Preferences:** Default servings, Measurement units
 - **Data:** Export recipes, Import backup
@@ -182,6 +196,7 @@ created_at: timestamptz
 ### Core Features
 
 #### Recipe Management
+
 1. **Create Recipe**
    - Manual entry with all fields
    - Import from URL (web scraping)
@@ -204,6 +219,7 @@ created_at: timestamptz
    - Bulk delete in selection mode
 
 #### Grocery List
+
 1. **Create List**
    - Name it
    - Add items manually
@@ -220,6 +236,7 @@ created_at: timestamptz
    - Share via system share sheet
 
 #### Recipe Import
+
 1. **URL Import**
    - Paste recipe URL
    - Extract: title, ingredients, instructions, image
@@ -239,11 +256,11 @@ created_at: timestamptz
 
 ## 6. Responsive Layout (Web)
 
-| Breakpoint | Layout |
-|------------|--------|
-| < 640px | Single column, bottom tabs |
-| 640-1024px | Two columns, sidebar nav |
-| > 1024px | Three columns (nav, list, detail) |
+| Breakpoint | Layout                            |
+| ---------- | --------------------------------- |
+| < 640px    | Single column, bottom tabs        |
+| 640-1024px | Two columns, sidebar nav          |
+| > 1024px   | Three columns (nav, list, detail) |
 
 ---
 
@@ -280,7 +297,7 @@ created_at: timestamptz
 
 ```
 app/
-├── (tabs)/
+├── tabs
 │   ├── _layout.tsx
 │   ├── index.tsx        (Recipes list)
 │   ├── grocery.tsx     (Grocery list)
