@@ -524,7 +524,7 @@
               "script": "start:all"
             },
             "metadata": {
-              "scriptContent": "concurrently \"npm run start:api\" \"npm run start:web\"",
+              "scriptContent": "npm run docker:up && concurrently \"npm run start:api\" \"npm run start:web\"",
               "runCommand": "npm run start:all"
             },
             "configurations": {},
@@ -657,7 +657,7 @@
               "script": "dev"
             },
             "metadata": {
-              "scriptContent": "npm run docker:up && concurrently \"npm run start:api\" \"npm run start:web\"",
+              "scriptContent": "npm run start:all",
               "runCommand": "npm run dev"
             },
             "configurations": {},
@@ -29529,5 +29529,5 @@
   },
   "version": "6.0",
   "errors": [],
-  "computedAt": 1778581770186
+  "computedAt": 1779095950756
 }

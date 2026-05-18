@@ -28,7 +28,7 @@ export default function LoginScreen() {
         setIsRegistering(false);
       } else {
         await login(username, password);
-        router.replace("/");
+        router.replace("/tabs");
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");

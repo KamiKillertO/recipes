@@ -60,164 +60,6 @@
   "fileMap": {
     "nonProjectFiles": [],
     "projectFileMap": {
-      "docker": [
-        {
-          "file": "docker/Dockerfile",
-          "hash": "14694978155310288093"
-        },
-        {
-          "file": "docker/docker-compose.yml",
-          "hash": "14349236137524343603"
-        },
-        {
-          "file": "docker/project.json",
-          "hash": "15076258355699219234"
-        }
-      ],
-      "app": [
-        {
-          "file": "app/.gitignore",
-          "hash": "10530348721903624668"
-        },
-        {
-          "file": "app/app.json",
-          "hash": "3384987883328044303"
-        },
-        {
-          "file": "app/app/(tabs)/_layout.tsx",
-          "hash": "7468020818578849729"
-        },
-        {
-          "file": "app/app/(tabs)/grocery.tsx",
-          "hash": "7418584481597902506"
-        },
-        {
-          "file": "app/app/(tabs)/index.tsx",
-          "hash": "514119294189104148"
-        },
-        {
-          "file": "app/app/(tabs)/settings.tsx",
-          "hash": "2432903711257795092"
-        },
-        {
-          "file": "app/app/_layout.tsx",
-          "hash": "5996750697072956480"
-        },
-        {
-          "file": "app/app/login.tsx",
-          "hash": "17121957488169062303"
-        },
-        {
-          "file": "app/app/recipe/[id].tsx",
-          "hash": "10315893826116905097"
-        },
-        {
-          "file": "app/app/recipe/new.tsx",
-          "hash": "8936496925992883806"
-        },
-        {
-          "file": "app/assets/adaptive-icon.png",
-          "hash": "16102135492459408350"
-        },
-        {
-          "file": "app/assets/favicon.png",
-          "hash": "10556792184362654649"
-        },
-        {
-          "file": "app/assets/icon.png",
-          "hash": "14252482080276080187"
-        },
-        {
-          "file": "app/assets/splash-icon.png",
-          "hash": "16102135492459408350"
-        },
-        {
-          "file": "app/package-lock.json",
-          "hash": "13042955741025343559"
-        },
-        {
-          "file": "app/package.json",
-          "hash": "9324903987349153284",
-          "deps": [
-            "npm:typescript",
-            "npm:expo",
-            "npm:expo-constants",
-            "npm:react",
-            "npm:react-dom",
-            "npm:react-native"
-          ]
-        },
-        {
-          "file": "app/project.json",
-          "hash": "6181747469107483864"
-        },
-        {
-          "file": "app/src/lib/api.ts",
-          "hash": "8301241454799645943"
-        },
-        {
-          "file": "app/src/lib/authStore.ts",
-          "hash": "12666713081417721462"
-        },
-        {
-          "file": "app/src/lib/recipeStore.ts",
-          "hash": "256253277496857801"
-        },
-        {
-          "file": "app/src/types/index.ts",
-          "hash": "11140815424968466687"
-        },
-        {
-          "file": "app/tsconfig.json",
-          "hash": "18388439864924501195"
-        }
-      ],
-      "api": [
-        {
-          "file": "api/cmd/api/main.go",
-          "hash": "8578307590070879477"
-        },
-        {
-          "file": "api/go.mod",
-          "hash": "3204479703329644922"
-        },
-        {
-          "file": "api/go.sum",
-          "hash": "6053031628827866192"
-        },
-        {
-          "file": "api/internal/application/dto/dto.go",
-          "hash": "9691062060566973760"
-        },
-        {
-          "file": "api/internal/application/services/services.go",
-          "hash": "9109321641567251183"
-        },
-        {
-          "file": "api/internal/domain/entities/entities.go",
-          "hash": "16410250670397087284"
-        },
-        {
-          "file": "api/internal/domain/ports/repository.go",
-          "hash": "12568043203971075591"
-        },
-        {
-          "file": "api/internal/infrastructure/http/handlers.go",
-          "hash": "10917309705236249314"
-        },
-        {
-          "file": "api/internal/infrastructure/http/middleware.go",
-          "hash": "14093522137558627983"
-        },
-        {
-          "file": "api/internal/infrastructure/persistence/repository.go",
-          "hash": "8514190437557722000"
-        },
-        {
-          "file": "api/migrations/001_initial_schema.sql",
-          "hash": "8799895708568927093"
-        }
-      ],
       "recipevault": [
         {
           "file": ".codex/config.toml",
@@ -233,7 +75,7 @@
         },
         {
           "file": ".local/share/opencode/plans/SPEC.md",
-          "hash": "13372512921577399167"
+          "hash": "15344403356542093023"
         },
         {
           "file": ".opencode/agents/ci-monitor-subagent.md",
@@ -329,7 +171,7 @@
         },
         {
           "file": "opencode.json",
-          "hash": "16592868722877903603"
+          "hash": "12252957496929962092"
         },
         {
           "file": "package-lock.json",
@@ -337,11 +179,177 @@
         },
         {
           "file": "package.json",
-          "hash": "2479247879558757397"
+          "hash": "13141723289752285097"
         },
         {
           "file": "scripts/install.sh",
           "hash": "15284338440276436458"
+        }
+      ],
+      "api": [
+        {
+          "file": "api/cmd/api/main.go",
+          "hash": "15081874595620041248"
+        },
+        {
+          "file": "api/go.mod",
+          "hash": "3204479703329644922"
+        },
+        {
+          "file": "api/go.sum",
+          "hash": "6053031628827866192"
+        },
+        {
+          "file": "api/internal/application/dto/dto.go",
+          "hash": "16275933262119218399"
+        },
+        {
+          "file": "api/internal/application/services/services.go",
+          "hash": "4974895607310886081"
+        },
+        {
+          "file": "api/internal/domain/entities/entities.go",
+          "hash": "8485058800190966036"
+        },
+        {
+          "file": "api/internal/domain/ports/repository.go",
+          "hash": "5084434801096875852"
+        },
+        {
+          "file": "api/internal/infrastructure/http/handlers.go",
+          "hash": "9366932439519778020"
+        },
+        {
+          "file": "api/internal/infrastructure/http/middleware.go",
+          "hash": "14093522137558627983"
+        },
+        {
+          "file": "api/internal/infrastructure/ocr/ocr.go",
+          "hash": "1448757216295701149"
+        },
+        {
+          "file": "api/internal/infrastructure/persistence/repository.go",
+          "hash": "14932672359358378028"
+        },
+        {
+          "file": "api/migrations/001_initial_schema.sql",
+          "hash": "8799895708568927093"
+        }
+      ],
+      "app": [
+        {
+          "file": "app/.gitignore",
+          "hash": "10530348721903624668"
+        },
+        {
+          "file": "app/app.json",
+          "hash": "3384987883328044303"
+        },
+        {
+          "file": "app/app/_layout.tsx",
+          "hash": "10382091889912325902"
+        },
+        {
+          "file": "app/app/import/index.tsx",
+          "hash": "5515070275197833095"
+        },
+        {
+          "file": "app/app/login.tsx",
+          "hash": "15947650454002929335"
+        },
+        {
+          "file": "app/app/recipe/[id].tsx",
+          "hash": "10315893826116905097"
+        },
+        {
+          "file": "app/app/recipe/new.tsx",
+          "hash": "8936496925992883806"
+        },
+        {
+          "file": "app/app/tabs/_layout.tsx",
+          "hash": "7468020818578849729"
+        },
+        {
+          "file": "app/app/tabs/grocery.tsx",
+          "hash": "7418584481597902506"
+        },
+        {
+          "file": "app/app/tabs/index.tsx",
+          "hash": "11174368088341816801"
+        },
+        {
+          "file": "app/app/tabs/settings.tsx",
+          "hash": "2432903711257795092"
+        },
+        {
+          "file": "app/assets/adaptive-icon.png",
+          "hash": "16102135492459408350"
+        },
+        {
+          "file": "app/assets/favicon.png",
+          "hash": "10556792184362654649"
+        },
+        {
+          "file": "app/assets/icon.png",
+          "hash": "14252482080276080187"
+        },
+        {
+          "file": "app/assets/splash-icon.png",
+          "hash": "16102135492459408350"
+        },
+        {
+          "file": "app/package-lock.json",
+          "hash": "9986679700386458675"
+        },
+        {
+          "file": "app/package.json",
+          "hash": "14550655180955159964",
+          "deps": [
+            "npm:typescript",
+            "npm:expo",
+            "npm:expo-constants",
+            "npm:react",
+            "npm:react-dom",
+            "npm:react-native"
+          ]
+        },
+        {
+          "file": "app/project.json",
+          "hash": "6181747469107483864"
+        },
+        {
+          "file": "app/src/lib/api.ts",
+          "hash": "8301241454799645943"
+        },
+        {
+          "file": "app/src/lib/authStore.ts",
+          "hash": "12666713081417721462"
+        },
+        {
+          "file": "app/src/lib/recipeStore.ts",
+          "hash": "256253277496857801"
+        },
+        {
+          "file": "app/src/types/index.ts",
+          "hash": "11140815424968466687"
+        },
+        {
+          "file": "app/tsconfig.json",
+          "hash": "18388439864924501195"
+        }
+      ],
+      "docker": [
+        {
+          "file": "docker/Dockerfile",
+          "hash": "14694978155310288093"
+        },
+        {
+          "file": "docker/docker-compose.yml",
+          "hash": "1859226414827574022"
+        },
+        {
+          "file": "docker/project.json",
+          "hash": "15076258355699219234"
         }
       ]
     }

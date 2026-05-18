@@ -1,17 +1,6 @@
-import { Stack, Redirect } from "expo-router";
-import { useAuthStore } from "../src/lib/authStore";
+import { Stack } from "expo-router";
 
 export default function RootLayout() {
-  const { isAuthenticated, isLoading } = useAuthStore();
-
-  if (isLoading) {
-    return null;
-  }
-
-  if (!isAuthenticated) {
-    return <Redirect href="/login" />;
-  }
-
   return (
     <Stack
       screenOptions={{
