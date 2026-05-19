@@ -1,13 +1,17 @@
 import { Stack, Redirect } from "expo-router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useAuthStore } from "../src/lib/authStore";
 
 export default function RootLayout() {
   const { isAuthenticated, checkAuth } = useAuthStore();
   const [isReady, setIsReady] = useState(false);
+  const hasChecked = useRef(false);
 
   useEffect(() => {
-    checkAuth().finally(() => setIsReady(true));
+    if (!hasChecked.current) {
+      hasChecked.current = true;
+      checkAuth().finally(() => setIsReady(true));
+    }
   }, []);
 
   if (!isReady) {
