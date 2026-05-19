@@ -11,6 +11,7 @@ import { useAuthStore } from "../src/lib/authStore";
 import { Link, useRouter } from "expo-router";
 
 export default function LoginScreen() {
+  debugger;
   const router = useRouter();
   const { login, register, isLoading } = useAuthStore();
   const [isRegistering, setIsRegistering] = useState(false);
