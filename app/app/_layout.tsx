@@ -1,8 +1,9 @@
-import { Stack, Redirect } from "expo-router";
+import { Stack, Redirect, usePathname } from "expo-router";
 import { useEffect, useState, useRef } from "react";
 import { useAuthStore } from "../src/lib/authStore";
 
 export default function RootLayout() {
+  const pathname = usePathname();
   const { isAuthenticated, checkAuth } = useAuthStore();
   const [isReady, setIsReady] = useState(false);
   const hasChecked = useRef(false);
@@ -18,7 +19,7 @@ export default function RootLayout() {
     return null;
   }
 
-  if (!isAuthenticated) {
+  if (!isAuthenticated && pathname !== "/login") {
     return <Redirect href="/login" />;
   }
 
