@@ -1,49 +1,41 @@
-import { Stack, Redirect, usePathname } from "expo-router";
-import { useEffect, useState, useRef } from "react";
-import { useAuthStore } from "../src/lib/authStore";
+import { Stack } from "expo-router";
+import { SplashScreenController } from "../src/lib/splash";
+import { AuthProvider, useAuth } from "../src/lib/AuthContext";
 
-export default function RootLayout() {
-  const pathname = usePathname();
-  const { isAuthenticated, checkAuth } = useAuthStore();
-  const [isReady, setIsReady] = useState(false);
-  const hasChecked = useRef(false);
+function RootLayout() {
+  const { isAuthenticated } = useAuth();
 
-  useEffect(() => {
-    if (!hasChecked.current) {
-      hasChecked.current = true;
-      checkAuth().finally(() => setIsReady(true));
-    }
-  }, []);
-
-  if (!isReady) {
-    return null;
-  }
-
-  if (!isAuthenticated && pathname !== "/login") {
-    return <Redirect href="/login" />;
-  }
+  console.log({ isAuthenticated });
 
   return (
-    <Stack
-      screenOptions={{
-        headerStyle: {
-          backgroundColor: "#2E7D32",
-        },
-        headerTintColor: "#fff",
-        headerTitleStyle: {
-          fontWeight: "bold",
-        },
-      }}
-    >
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      <Stack.Screen name="login" options={{ headerShown: false }} />
-      <Stack.Screen name="recipe/[id]" options={{ title: "Recipe Details" }} />
-      <Stack.Screen name="recipe/new" options={{ title: "New Recipe" }} />
-      <Stack.Screen
-        name="recipe/edit/[id]"
-        options={{ title: "Edit Recipe" }}
-      />
-      <Stack.Screen name="import" options={{ title: "Scan Recipe" }} />
+    <Stack>
+      <Stack.Protected guard={isAuthenticated}>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="recipe/[id]"
+          options={{ title: "Recipe Details" }}
+        />
+        <Stack.Screen name="recipe/new" options={{ title: "New Recipe" }} />
+        <Stack.Screen
+          name="recipe/edit/[id]"
+          options={{ title: "Edit Recipe" }}
+        />
+        <Stack.Screen name="import" options={{ title: "Scan Recipe" }} />
+      </Stack.Protected>
+
+      <Stack.Protected guard={!isAuthenticated}>
+        <Stack.Screen name="login" options={{ headerShown: false }} />
+      </Stack.Protected>
     </Stack>
+  );
+}
+
+export default function Root() {
+  // Set up the auth context and render your layout inside of it.
+  return (
+    <AuthProvider>
+      <SplashScreenController />
+      <RootLayout />
+    </AuthProvider>
   );
 }

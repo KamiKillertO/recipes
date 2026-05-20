@@ -1,13 +1,13 @@
-import { create } from 'zustand';
-import { api } from '../lib/api';
-import * as types from '../types';
+import { create } from "zustand";
+import { api } from "../lib/api";
+import * as types from "../types";
 
 interface AuthState {
-  user: types.AuthResponse['user'] | null;
+  user: types.AuthResponse["user"] | null;
   token: string | null;
   isAuthenticated: boolean;
-  login: (username: string, password: string) => Promise<void>;
-  register: (username: string, password: string) => Promise<void>;
+  login: (username: string, password: string) => Promise<string>;
+  register: (username: string, password: string) => Promise<string>;
   logout: () => void;
   checkAuth: (token: string | null) => void;
 }

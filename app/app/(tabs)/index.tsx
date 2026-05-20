@@ -1,14 +1,21 @@
-import { useEffect, useState } from 'react';
-import { StyleSheet, View, FlatList, TouchableOpacity, TextInput, ActivityIndicator, Text } from 'react-native';
-import { Link, useRouter } from 'expo-router';
-import { useRecipeStore } from '../../src/lib/recipeStore';
-import { useAuthStore } from '../../src/lib/authStore';
+import { useEffect, useState } from "react";
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  TouchableOpacity,
+  TextInput,
+  ActivityIndicator,
+  Text,
+} from "react-native";
+import { Link } from "expo-router";
+import { useRecipeStore } from "../../src/lib/recipeStore";
+import { useAuthStore } from "../../src/lib/authStore";
 
 export default function RecipesScreen() {
-  const router = useRouter();
   const { recipes, isLoading, error, fetchRecipes } = useRecipeStore();
   const { isAuthenticated } = useAuthStore();
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   useEffect(() => {
@@ -24,22 +31,8 @@ export default function RecipesScreen() {
   };
 
   const filteredRecipes = recipes.filter((recipe) =>
-    recipe.title.toLowerCase().includes(searchQuery.toLowerCase())
+    recipe.title.toLowerCase().includes(searchQuery.toLowerCase()),
   );
-
-  if (!isAuthenticated) {
-    return (
-      <View style={styles.container}>
-        <View style={styles.authPrompt}>
-          <Link href="/login" style={styles.authLink}>
-            <TouchableOpacity style={styles.loginButton}>
-              <Link href="/login">Login to see your recipes</Link>
-            </TouchableOpacity>
-          </Link>
-        </View>
-      </View>
-    );
-  }
 
   return (
     <View style={styles.container}>
@@ -71,7 +64,8 @@ export default function RecipesScreen() {
                 <View style={styles.recipeInfo}>
                   <Text style={styles.recipeTitle}>{item.title}</Text>
                   <Text style={styles.recipeMeta}>
-                    {item.prep_time + item.cook_time} min • {item.servings} servings
+                    {item.prep_time + item.cook_time} min • {item.servings}{" "}
+                    servings
                   </Text>
                 </View>
               </TouchableOpacity>
@@ -101,10 +95,10 @@ export default function RecipesScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FAFAFA',
+    backgroundColor: "#FAFAFA",
   },
   searchInput: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     margin: 16,
     padding: 12,
     borderRadius: 8,
@@ -115,12 +109,12 @@ const styles = StyleSheet.create({
     paddingTop: 0,
   },
   recipeCard: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     padding: 16,
     marginBottom: 12,
     borderRadius: 8,
     elevation: 2,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.2,
     shadowRadius: 2,
@@ -130,63 +124,63 @@ const styles = StyleSheet.create({
   },
   recipeTitle: {
     fontSize: 18,
-    fontWeight: '600',
-    color: '#212121',
+    fontWeight: "600",
+    color: "#212121",
   },
   recipeMeta: {
     fontSize: 14,
-    color: '#757575',
+    color: "#757575",
     marginTop: 4,
   },
   emptyState: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   fab: {
-    position: 'absolute',
+    position: "absolute",
     right: 16,
     bottom: 16,
     width: 56,
     height: 56,
     borderRadius: 28,
-    backgroundColor: '#2E7D32',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "#2E7D32",
+    justifyContent: "center",
+    alignItems: "center",
     elevation: 4,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
   },
   fabText: {
     fontSize: 32,
-    color: '#fff',
+    color: "#fff",
     marginTop: -2,
   },
   importFab: {
-    position: 'absolute',
+    position: "absolute",
     right: 16,
     bottom: 80,
     width: 56,
     height: 56,
     borderRadius: 28,
-    backgroundColor: '#FF6F00',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "#FF6F00",
+    justifyContent: "center",
+    alignItems: "center",
     elevation: 4,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
   },
   authPrompt: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   authLink: {
-    color: '#2E7D32',
+    color: "#2E7D32",
   },
   loginButton: {
     padding: 16,

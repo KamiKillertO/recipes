@@ -7,13 +7,63 @@ import {
   StyleSheet,
   ActivityIndicator,
 } from "react-native";
-import { useAuthStore } from "../src/lib/authStore";
-import { Link, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
+import { useAuth } from "../src/lib/AuthContext";
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    margin: "auto",
+    width: "50%",
+    minWidth: "250px",
+    justifyContent: "center",
+    backgroundColor: "#FAFAFA",
+    padding: "2rem",
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: "bold",
+    color: "#212121",
+    marginBottom: 32,
+    textAlign: "center",
+  },
+  input: {
+    backgroundColor: "#fff",
+    padding: 16,
+    borderRadius: 8,
+    marginBottom: 16,
+    fontSize: 16,
+  },
+  button: {
+    backgroundColor: "#2E7D32",
+    padding: 16,
+    borderRadius: 8,
+    marginTop: 8,
+  },
+  buttonText: {
+    color: "#fff",
+    textAlign: "center",
+    fontSize: 16,
+    fontWeight: "600",
+  },
+  error: {
+    color: "#D32F2F",
+    marginBottom: 16,
+    textAlign: "center",
+  },
+  switchButton: {
+    marginTop: 24,
+  },
+  switchText: {
+    color: "#2E7D32",
+    textAlign: "center",
+  },
+});
 
 export default function LoginScreen() {
   debugger;
   const router = useRouter();
-  const { login, register, isLoading } = useAuthStore();
+  const { signIn, register, isLoading } = useAuth();
   const [isRegistering, setIsRegistering] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -28,7 +78,7 @@ export default function LoginScreen() {
         setPassword("");
         setIsRegistering(false);
       } else {
-        await login(username, password);
+        await signIn(username, password);
         router.replace("/");
       }
     } catch (err) {
@@ -87,50 +137,3 @@ export default function LoginScreen() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 24,
-    justifyContent: "center",
-    backgroundColor: "#FAFAFA",
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: "bold",
-    color: "#212121",
-    marginBottom: 32,
-    textAlign: "center",
-  },
-  input: {
-    backgroundColor: "#fff",
-    padding: 16,
-    borderRadius: 8,
-    marginBottom: 16,
-    fontSize: 16,
-  },
-  button: {
-    backgroundColor: "#2E7D32",
-    padding: 16,
-    borderRadius: 8,
-    marginTop: 8,
-  },
-  buttonText: {
-    color: "#fff",
-    textAlign: "center",
-    fontSize: 16,
-    fontWeight: "600",
-  },
-  error: {
-    color: "#D32F2F",
-    marginBottom: 16,
-    textAlign: "center",
-  },
-  switchButton: {
-    marginTop: 24,
-  },
-  switchText: {
-    color: "#2E7D32",
-    textAlign: "center",
-  },
-});

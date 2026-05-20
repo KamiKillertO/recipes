@@ -1,12 +1,13 @@
-import { createContext, use, useEffect, type PropsWithChildren } from 'react';
-import { useAuthStore } from './authStore';
-import { useStorageState } from './useStorageState';
+import { createContext, use, useEffect, type PropsWithChildren } from "react";
+import { useAuthStore } from "./authStore";
+import { useStorageState } from "./useStorage";
 
 type AuthContextType = {
   signIn: (username: string, password: string) => Promise<string>;
   signOut: () => void;
   register: (username: string, password: string) => Promise<string>;
   isAuthenticated: boolean;
+  isLoading: boolean;
 };
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -14,14 +15,15 @@ const AuthContext = createContext<AuthContextType | null>(null);
 export function useAuth() {
   const value = use(AuthContext);
   if (!value) {
-    throw new Error('useAuth must be used within AuthProvider');
+    throw new Error("useAuth must be used within AuthProvider");
   }
   return value;
 }
 
 export function AuthProvider({ children }: PropsWithChildren) {
-  const { login, register, logout, checkAuth, isAuthenticated } = useAuthStore();
-  const [[isLoading, token], setToken] = useStorageState('token');
+  const { login, register, logout, checkAuth, isAuthenticated } =
+    useAuthStore();
+  const [[isLoading, token], setToken] = useStorageState("token");
 
   useEffect(() => {
     checkAuth(token);
@@ -45,6 +47,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
           return newToken;
         },
         isAuthenticated,
+        isLoading,
       }}
     >
       {children}
