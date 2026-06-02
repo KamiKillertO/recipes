@@ -31,12 +31,5 @@
     "metro-resolver": "~0.83.0",
     "nx": "22.7.1"
   },
-  "dependencies": {
-    "expo": "~54.0.0",
-    "nx-go": "^0.0.8",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "react-native": "0.81.5"
-  },
   "nx": {}
 }

@@ -11,86 +11,8 @@ import {
 import { Link } from "expo-router";
 import { useRecipeStore } from "../../src/lib/recipeStore";
 import { useAuthStore } from "../../src/lib/authStore";
-
-export default function RecipesScreen() {
-  const { recipes, isLoading, error, fetchRecipes } = useRecipeStore();
-  const { isAuthenticated } = useAuthStore();
-  const [searchQuery, setSearchQuery] = useState("");
-  const [isRefreshing, setIsRefreshing] = useState(false);
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      fetchRecipes();
-    }
-  }, [isAuthenticated]);
-
-  const handleRefresh = async () => {
-    setIsRefreshing(true);
-    await fetchRecipes();
-    setIsRefreshing(false);
-  };
-
-  const filteredRecipes = recipes.filter((recipe) =>
-    recipe.title.toLowerCase().includes(searchQuery.toLowerCase()),
-  );
-
-  return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.searchInput}
-        placeholder="Search recipes..."
-        value={searchQuery}
-        onChangeText={setSearchQuery}
-        placeholderTextColor="#757575"
-      />
-
-      {isLoading && recipes.length === 0 ? (
-        <ActivityIndicator size="large" color="#2E7D32" />
-      ) : filteredRecipes.length === 0 ? (
-        <View style={styles.emptyState}>
-          <Link href="/recipe/new">
-            <TouchableOpacity>
-              <Text>No recipes yet. Tap to add your first recipe!</Text>
-            </TouchableOpacity>
-          </Link>
-        </View>
-      ) : (
-        <FlatList
-          data={filteredRecipes}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <Link href={`/recipe/${item.id}`}>
-              <TouchableOpacity style={styles.recipeCard}>
-                <View style={styles.recipeInfo}>
-                  <Text style={styles.recipeTitle}>{item.title}</Text>
-                  <Text style={styles.recipeMeta}>
-                    {item.prep_time + item.cook_time} min • {item.servings}{" "}
-                    servings
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            </Link>
-          )}
-          refreshing={isRefreshing}
-          onRefresh={handleRefresh}
-          contentContainerStyle={styles.listContent}
-        />
-      )}
-
-      <Link href="/recipe/new" asChild>
-        <TouchableOpacity style={styles.fab}>
-          <Text style={styles.fabText}>+</Text>
-        </TouchableOpacity>
-      </Link>
-
-      <Link href="/import" asChild>
-        <TouchableOpacity style={styles.importFab}>
-          <Text style={styles.fabText}>📷</Text>
-        </TouchableOpacity>
-      </Link>
-    </View>
-  );
-}
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faCamera, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const styles = StyleSheet.create({
   container: {
@@ -186,3 +108,83 @@ const styles = StyleSheet.create({
     padding: 16,
   },
 });
+
+export default function RecipesScreen() {
+  const { recipes, isLoading, error, fetchRecipes } = useRecipeStore();
+  const { isAuthenticated } = useAuthStore();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchRecipes();
+    }
+  }, [isAuthenticated]);
+
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    await fetchRecipes();
+    setIsRefreshing(false);
+  };
+
+  const filteredRecipes = recipes.filter((recipe) =>
+    recipe.title.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
+
+  return (
+    <View style={styles.container}>
+      <TextInput
+        style={styles.searchInput}
+        placeholder="Search recipes..."
+        value={searchQuery}
+        onChangeText={setSearchQuery}
+        placeholderTextColor="#757575"
+      />
+
+      {isLoading && recipes.length === 0 ? (
+        <ActivityIndicator size="large" color="#2E7D32" />
+      ) : filteredRecipes.length === 0 ? (
+        <View style={styles.emptyState}>
+          <Link href="/recipe/new">
+            <TouchableOpacity>
+              <Text>No recipes yet. Tap to add your first recipe!</Text>
+            </TouchableOpacity>
+          </Link>
+        </View>
+      ) : (
+        <FlatList
+          data={filteredRecipes}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <Link href={`/recipe/${item.id}`}>
+              <TouchableOpacity style={styles.recipeCard}>
+                <View style={styles.recipeInfo}>
+                  <Text style={styles.recipeTitle}>{item.title}</Text>
+                  <Text style={styles.recipeMeta}>
+                    {item.prep_time + item.cook_time} min • {item.servings}{" "}
+                    servings
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </Link>
+          )}
+          refreshing={isRefreshing}
+          onRefresh={handleRefresh}
+          contentContainerStyle={styles.listContent}
+        />
+      )}
+
+      <Link href="/recipe/new" asChild>
+        <TouchableOpacity style={styles.fab}>
+          <FontAwesomeIcon icon={faPlus} />
+        </TouchableOpacity>
+      </Link>
+
+      <Link href="/import" asChild>
+        <TouchableOpacity style={styles.importFab}>
+          <FontAwesomeIcon icon={faCamera} />
+        </TouchableOpacity>
+      </Link>
+    </View>
+  );
+}
