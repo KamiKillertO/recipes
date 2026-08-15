@@ -11,6 +11,15 @@ npm install
 echo "Installing Go dependencies..."
 cd api && go mod download && cd ..
 
+# Install Docker
+echo "Installing Docker..."
+sudo apt-get update && sudo apt-get install -y docker.io
+
+# Install Docker Compose plugin
+echo "Installing Docker Compose plugin..."
+sudo docker compose plugin install || \
+    (curl -SL https://github.com/docker/compose/releases/latest/download/docker-compose-linux-x86_64 -o $(docker plugin ls 2>/dev/null | grep compose || echo "~/.docker/cli-plugins/docker-compose")/docker-compose)
+
 # Copy environment file if it doesn't exist
 if [ ! -f .env ]; then
     cp .env.example .env
