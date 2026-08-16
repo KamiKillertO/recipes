@@ -31,5 +31,11 @@
     "metro-resolver": "~0.83.0",
     "nx": "22.7.1"
   },
-  "nx": {}
+  "nx": {},
+  "allowScripts": {
+    "detox@20.51.4": true,
+    "nx@22.7.1": true,
+    "dtrace-provider@0.8.8": true,
+    "unrs-resolver@1.11.1": true
+  }
 }
