@@ -5,19 +5,17 @@
   "projectType": "application",
   "targets": {
     "serve": {
-      "executor": "@nx/expo:start",
+      "executor": "nx:vite",
       "options": {
         "port": 8081
       },
       "configurations": {
-        "web": { "platform": "web" },
-        "android": { "platform": "android" },
-        "ios": { "platform": "ios" }
+        "web": { "platform": "web" }
       },
       "defaultConfiguration": "web"
     },
     "build": {
-      "executor": "@nx/expo:build",
+      "executor": "nx:vite",
       "options": {},
       "configurations": {
         "production": {}

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RecipeVault - Web</title>
+  <style>
+    body { margin: 0; font-family: system-ui, sans-serif; }
+    a { text-decoration: none; color: #2E7D32; }
+    nav ul { list-style: none; padding: 0; display: flex; gap: 16px; }
+    a.button { 
+      background: #2E7D32; color: white; padding: 8 16; border-radius: 8; 
+    }
+    .page { display: none; }
+    .page.active { display: block; }
+  </style>
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="/login" class="nav-link">Login</a></li>
+      <li><a href="/import" class="nav-link">Import Recipe</a></li>
+      <li><a href="/new-recipe" class="nav-link">New Recipe</a></li>
+    </ul>
+  </nav>
+  <main style="padding: 32px;">
+    <div id="root"><slot></slot></div>
+  </main>
+
+  <script type="module">
+    import './login-lit.js';
+    import './import-lit.js';
+    import './new-recipe-lit.js';
+    import './recipe-detail-lit.js';
+    
+    const routeToComponent = {
+      '/login': 'login-screen',
+      '/import': 'import-screen',
+      '/new-recipe': 'new-recipe-screen',
+      '/recipe-detail': 'recipe-detail-screen'
+    };
+    
+    const routeContainer = document.getElementById('root');
+    
+    function renderPage(pathname) {
+      document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
+      
+      const componentName = routeToComponent[pathname];
+      if (componentName) {
+        const customElement = document.querySelector(componentName);
+        if (customElement) {
+          routeContainer.innerHTML = '';
+          routeContainer.appendChild(customElement);
+          customElement.classList.add('active');
+        }
+      }
+    }
+    
+    document.addEventListener('click', (e) => {
+      const link = e.target.closest('.nav-link');
+      if (link) {
+        e.preventDefault();
+        const href = link.getAttribute('href');
+        history.pushState({}, '', href);
+        renderPage(href);
+      }
+    });
+    
+    renderPage(window.location.pathname || '/');
+    
+    window.addEventListener('popstate', () => {
+      renderPage(window.location.pathname || '/');
+    });
+  </script>
+</body>
+</html>
