@@ -1,71 +1,74 @@
 import { html, LitElement } from "lit";
-import { useAuthStore } from "../src/lib/authStore";
+import { api } from "../src/lib/api";
 
 export class RecipeDetailScreen extends LitElement {
-  constructor() {
-    super();
-    this.id = "";
-  }
-
-  state = {
-    id: "",
-    selectedRecipe: null,
-    isLoading: true,
+  static properties = {
+    recipeId: { type: String },
+    selectedRecipe: { state: true },
+    isLoading: { state: true },
+    error: { state: true },
   };
 
-  async connectedCallback() {
+  constructor() {
+    super();
+    this.recipeId = "";
+    this.selectedRecipe = null;
+    this.isLoading = true;
+    this.error = "";
+  }
+
+  connectedCallback() {
     super.connectedCallback();
-    const urlParams = new URLSearchParams(window.location.search);
-    this.state = { ...this.state, id: urlParams.get("id") || "" };
     this.loadRecipe();
   }
 
   async loadRecipe() {
-    const { id } = this.state;
-    if (!id) {
-      this.state = { ...this.state, isLoading: false };
+    if (!this.recipeId) {
+      this.isLoading = false;
       return;
     }
-
+    this.isLoading = true;
+    this.error = "";
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL || "http://localhost:8080"}/api/recipes/${id}`
-      );
-      const data = await response.json();
-      this.state = { ...this.state, selectedRecipe: data, isLoading: false };
-    } catch (error) {
-      console.error("Failed to fetch recipe:", error);
-      this.state = { ...this.state, isLoading: false };
+      const data = await api.getRecipe(this.recipeId);
+      this.selectedRecipe = data;
+    } catch (err) {
+      this.error = err instanceof Error ? err.message : "Failed to load recipe";
+    } finally {
+      this.isLoading = false;
     }
   }
 
   render() {
-    const { id, selectedRecipe, isLoading } = this.state;
-
-    if (isLoading || !selectedRecipe) {
-      return html` <div class="loading">Loading recipe...</div> `;
+    if (this.isLoading) {
+      return html`<div class="loading">Loading recipe...</div>`;
+    }
+    if (this.error) {
+      return html`<div class="error">${this.error}</div>`;
+    }
+    if (!this.selectedRecipe) {
+      return html`<div class="muted">Recipe not found.</div>`;
     }
 
-    const { title, description, ingredients, instructions } = selectedRecipe;
+    const { title, description, ingredients, instructions } = this.selectedRecipe;
 
     return html`
       <div class="recipe-detail-page">
+        <a class="back-link" href="/">&larr; Back to recipes</a>
         <h2>${title}</h2>
-        <p>${description}</p>
+        ${description ? html`<p>${description}</p>` : ""}
 
         <h3>Ingredients</h3>
-        ${ingredients.map(
-          (ing: any) => html` <div class="ingredient-item">
-            ${ing.quantity} ${ing.unit} ${ing.name}
-          </div> `
-        )}
+        <ul class="recipe-list">
+          ${(ingredients || []).map(
+            (ing) => html`<li>${ing.quantity} ${ing.unit} ${ing.name}</li>`
+          )}
+        </ul>
 
         <h3>Instructions</h3>
-        ${instructions.map(
-          (inst: any) => html` <div class="instruction-item">
-            ${inst.step_number}. ${inst.text}
-          </div> `
-        )}
+        <ol>
+          ${(instructions || []).map((inst) => html`<li>${inst.text}</li>`)}
+        </ol>
       </div>
     `;
   }

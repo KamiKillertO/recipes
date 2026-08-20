@@ -1,5 +1,6 @@
 import { html, LitElement } from "lit";
 import { useAuthStore } from "../src/lib/authStore";
+import { router } from "../src/lib/router";
 
 export class ImportScreen extends LitElement {
   constructor() {
@@ -78,7 +79,7 @@ export class ImportScreen extends LitElement {
         ingredients: ingredientLines,
         instructions: instructionLines,
       });
-      window.history.pushState({}, "", "/");
+      router.navigate("/");
     } catch (error) {
       console.error("Failed to save recipe:", error);
     }

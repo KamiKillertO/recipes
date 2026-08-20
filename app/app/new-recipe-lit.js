@@ -1,4 +1,5 @@
 import { html, LitElement } from "lit";
+import { router } from "../src/lib/router";
 
 export class NewRecipeScreen extends LitElement {
   constructor() {
@@ -52,7 +53,7 @@ export class NewRecipeScreen extends LitElement {
         instructions: instructionLines,
       });
 
-      window.history.pushState({}, "", "/");
+      router.navigate("/");
     } catch (error) {
       console.error("Failed to create recipe:", error);
     }
