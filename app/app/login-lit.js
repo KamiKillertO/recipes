@@ -1,79 +1,93 @@
 import { html, LitElement } from "lit";
 import { useAuthStore } from "../src/lib/authStore";
+import { router, REDIRECT_KEY } from "../src/lib/router";
 
 export class LoginScreen extends LitElement {
+  static properties = {
+    username: { state: true },
+    password: { state: true },
+    isRegistering: { state: true },
+    error: { state: true },
+    isSubmitting: { state: true },
+  };
+
   constructor() {
     super();
     this.username = "";
     this.password = "";
     this.isRegistering = false;
     this.error = "";
+    this.isSubmitting = false;
   }
 
-  state = {
-    username: "",
-    password: "",
-    isRegistering: false,
-    error: "",
-  };
+  async handleSubmit(e) {
+    e.preventDefault();
+    if (this.isSubmitting) return;
 
-  async handleSubmit() {
     const store = useAuthStore.getState();
+    this.isSubmitting = true;
+    this.error = "";
     try {
-      if (this.state.isRegistering) {
-        await store.register(this.state.username, this.state.password);
-        this.state = { ...this.state, username: "", password: "", isRegistering: false };
+      if (this.isRegistering) {
+        await store.register(this.username, this.password);
       } else {
-        await store.login(this.state.username, this.state.password);
-        window.history.pushState({}, "", "/");
-        this.requestUpdate();
+        await store.login(this.username, this.password);
       }
+      const redirectTo = sessionStorage.getItem(REDIRECT_KEY) || "/";
+      sessionStorage.removeItem(REDIRECT_KEY);
+      router.navigate(redirectTo);
     } catch (err) {
-      this.state = { ...this.state, error: err instanceof Error ? err.message : "An error occurred" };
+      this.error = err instanceof Error ? err.message : "An error occurred";
+    } finally {
+      this.isSubmitting = false;
     }
   }
 
   render() {
-    const { username, password, isRegistering, error } = this.state;
+    const { username, password, isRegistering, error, isSubmitting } = this;
+
     return html`
       <div class="login-page">
         <h2>${isRegistering ? "Register" : "Login"}</h2>
 
         ${error ? html`<p class="error">${error}</p>` : null}
 
-        <input
-          class="input-field"
-          placeholder="Username"
-          .value="${username}"
-          @input="${(e: Event) => {
-            const target = e.target as HTMLInputElement;
-            this.state = { ...this.state, username: target.value };
-          }}"
-        />
+        <form @submit="${this.handleSubmit}">
+          <input
+            class="input-field"
+            placeholder="Username"
+            autocomplete="username"
+            .value="${username}"
+            @input="${(e) => {
+              this.username = e.target.value;
+            }}"
+          />
 
-        <input
-          class="input-field"
-          type="password"
-          placeholder="Password"
-          .value="${password}"
-          @input="${(e: Event) => {
-            const target = e.target as HTMLInputElement;
-            this.state = { ...this.state, password: target.value };
-          }}"
-        />
+          <input
+            class="input-field"
+            type="password"
+            placeholder="Password"
+            autocomplete="current-password"
+            .value="${password}"
+            @input="${(e) => {
+              this.password = e.target.value;
+            }}"
+          />
 
-        <button
-          class="button"
-          @click="${this.handleSubmit}"
-          ?disabled="${!username || !password}"
-        >
-          ${isRegistering ? "Register" : "Login"}
-        </button>
+          <button
+            class="button"
+            type="submit"
+            ?disabled="${isSubmitting || !username || !password}"
+          >
+            ${isSubmitting ? "Please wait..." : isRegistering ? "Register" : "Login"}
+          </button>
+        </form>
 
         <button
           class="toggle-button"
           @click="${() => {
-            this.state = { ...this.state, isRegistering: !isRegistering };
+            this.isRegistering = !isRegistering;
+            this.error = "";
           }}"
         >
           ${isRegistering
