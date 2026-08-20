@@ -8,6 +8,13 @@
 4. **When stuck, ask for help** - Don't spend too much time stuck
 5. **Create tests** as much as possible
 6. **Don't focus on UI** - MVP first, improve later
+
+### Important: Dev Server Auto-Starter Policy
+
+- NEVER automatically start Vite, Metro, or any dev server in the background
+- Always ask the user before running `npm start`, `nx serve`, or `npx vite`
+- Let the user decide when and how to start the development server
+- This prevents unexpected processes, port conflicts, and unwanted side effects
 7. **Make the repo portable** - Should run on any machine with minimal setup
 8. **Use nx** - Us the the nx commands to generate app, packages or to run lint, tests, and start servers
 
