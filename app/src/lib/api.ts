@@ -11,9 +11,14 @@ const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:8080";
 
 export class ApiClient {
   private token: string | null = null;
+  private onUnauthorized: (() => void) | null = null;
 
   setToken(token: string | null) {
     this.token = token;
+  }
+
+  setUnauthorizedHandler(handler: (() => void) | null) {
+    this.onUnauthorized = handler;
   }
 
   private async request<T>(
@@ -35,6 +40,9 @@ export class ApiClient {
     });
 
     if (!response.ok) {
+      if (response.status === 401 && !endpoint.startsWith("/api/auth/")) {
+        this.onUnauthorized?.();
+      }
       const error = await response.json().catch(() => ({ error: "Unknown error" }));
       throw new Error(error.error || `Request failed: ${response.status}`);
     }
@@ -122,6 +130,7 @@ export class ApiClient {
     });
 
     if (!response.ok) {
+      if (response.status === 401) this.onUnauthorized?.();
       throw new Error("OCR failed");
     }
 
