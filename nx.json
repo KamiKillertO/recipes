@@ -7,7 +7,10 @@
     ],
     "production": [
       "default",
-      "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x).(.snap|[jt]sx)?(.snap)"
+      "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x).(.snap|[jt]sx)?(.snap)",
+      "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
+      "!{projectRoot}/tsconfig.spec.json",
+      "!{projectRoot}/src/test-setup.[jt]s"
     ],
     "sharedGlobals": []
   },
@@ -72,40 +75,24 @@
   },
   "plugins": [
     {
-      "plugin": "nx-go",
+      "plugin": "@nx-go/nx-go",
       "options": {
         "goPath": "api"
       }
     },
-    "@nx-go/nx-go",
     {
-      "plugin": "@nx/expo/plugin",
+      "plugin": "@nx/vite/plugin",
       "options": {
-        "startTargetName": "start",
         "buildTargetName": "build",
-        "prebuildTargetName": "prebuild",
+        "testTargetName": "test",
         "serveTargetName": "serve",
-        "installTargetName": "install",
-        "exportTargetName": "export",
-        "submitTargetName": "submit",
-        "runIosTargetName": "run-ios",
-        "runAndroidTargetName": "run-android",
-        "buildDepsTargetName": "build-deps",
-        "watchDepsTargetName": "watch-deps"
+        "previewTargetName": "preview"
       }
     },
     {
-      "plugin": "@nx/react-native/plugin",
+      "plugin": "@nx/eslint/plugin",
       "options": {
-        "startTargetName": "start",
-        "upgradeTargetName": "update",
-        "bundleTargetName": "bundle",
-        "podInstallTargetName": "pod-install",
-        "runIosTargetName": "run-ios",
-        "runAndroidTargetName": "run-android",
-        "buildIosTargetName": "build-ios",
-        "buildAndroidTargetName": "build-android",
-        "syncDepsTargetName": "sync-deps"
+        "lintTargetName": "lint"
       }
     },
     {
@@ -126,30 +113,32 @@
       "root": "app",
       "targets": {
         "serve": {
-          "executor": "@nx/expo:start",
+          "executor": "nx:vite",
           "options": {
             "port": 8081
           },
           "configurations": {
             "web": {
               "platform": "web"
-            },
-            "android": {
-              "platform": "android"
-            },
-            "ios": {
-              "platform": "ios"
             }
           },
           "defaultConfiguration": "web"
         },
         "build": {
-          "executor": "@nx/expo:build",
+          "executor": "nx:vite",
           "options": {},
           "configurations": {
             "production": {}
           },
           "defaultConfiguration": "production"
+        },
+        "lint": {
+          "executor": "@nx/eslint:lint",
+          "options": {
+            "lintFilePatterns": [
+              "{projectRoot}/**/*.{js,ts}"
+            ]
+          }
         }
       }
     },
