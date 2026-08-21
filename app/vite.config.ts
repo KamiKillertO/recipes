@@ -4,6 +4,7 @@ export default defineConfig({
   root: "./app",
   server: {
     port: 8081,
+    host: true
   },
   build: {
     outDir: "dist",

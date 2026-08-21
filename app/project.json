@@ -3,24 +3,20 @@
   "$schema": "../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "app",
   "projectType": "application",
-  "targets": {
+"targets": {
     "serve": {
-      "executor": "nx:vite",
+      "executor": "@nx/vite:dev-server",
       "options": {
-        "port": 8081
-      },
-      "configurations": {
-        "web": { "platform": "web" }
-      },
-      "defaultConfiguration": "web"
+        "buildTarget": "app:build",
+        "port": 8081,
+        "host": "0.0.0.0"
+      }
     },
-    "build": {
-      "executor": "nx:vite",
-      "options": {},
-      "configurations": {
-        "production": {}
-      },
-      "defaultConfiguration": "production"
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["{projectRoot}/**/*.{js,ts}"]
+      }
     }
   }
 }
