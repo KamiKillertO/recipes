@@ -44,7 +44,7 @@ export interface CreateRecipeRequest {
   tags: string[];
 }
 
-export interface UpdateRecipeRequest extends Partial<CreateRecipeRequest> {}
+export type UpdateRecipeRequest = Partial<CreateRecipeRequest>;
 
 export interface AuthResponse {
   token: string;

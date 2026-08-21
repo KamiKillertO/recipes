@@ -1,19 +1,21 @@
 import { html, LitElement } from "lit";
-import { useAuthStore } from "../src/lib/authStore";
 import { router } from "../src/lib/router";
 
-export class ImportScreen extends LitElement {
-  constructor() {
-    super();
-    this.image = null;
-    this.dividerX = 50;
-    this.isProcessing = false;
-    this.ingredients = "";
-    this.instructions = "";
-  }
+interface ImportState {
+  image: string | null;
+  dividerX: number;
+  isProcessing: boolean;
+  ingredients: string;
+  instructions: string;
+}
 
-  state = {
-    image: null as string | null,
+export class ImportScreen extends LitElement {
+  static properties = {
+    state: { state: true },
+  };
+
+  state: ImportState = {
+    image: null,
     dividerX: 50,
     isProcessing: false,
     ingredients: "",
@@ -21,7 +23,7 @@ export class ImportScreen extends LitElement {
   };
 
   async handlePickImage() {
-    const input = this.shadowRoot?.querySelector('input[type="file"]');
+    const input = this.shadowRoot?.querySelector<HTMLInputElement>('input[type="file"]');
     if (input) input.click();
   }
 
@@ -39,7 +41,7 @@ export class ImportScreen extends LitElement {
       const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
       const response = await fetch(`${API_URL}/api/ocr`, {
         method: "POST",
-        body: formData as any,
+        body: formData,
       });
 
       if (!response.ok) throw new Error("OCR failed");
@@ -63,12 +65,12 @@ export class ImportScreen extends LitElement {
     }
     const ingredientLines = this.state.ingredients
       .split("\n")
-      .filter((l: string) => l.trim())
-      .map((name: string) => ({ name: name.trim(), quantity: "", unit: "" }));
+      .filter((l) => l.trim())
+      .map((name) => ({ name: name.trim(), quantity: "", unit: "" }));
     const instructionLines = this.state.instructions
       .split("\n")
-      .filter((l: string) => l.trim())
-      .map((text: string, i: number) => ({
+      .filter((l) => l.trim())
+      .map((text, i) => ({
         step_number: i + 1,
         text: text.trim(),
       }));
@@ -86,7 +88,7 @@ export class ImportScreen extends LitElement {
   }
 
   render() {
-    const { image, dividerX, isProcessing, ingredients, instructions } = this.state;
+    const { image, isProcessing, ingredients, instructions } = this.state;
 
     const imageSection = !image
       ? html`
@@ -125,37 +127,37 @@ export class ImportScreen extends LitElement {
           </div>
         `;
 
-      const recipeSection = this.state.ingredients || this.state.instructions
-        ? html`
-            <div class="recipe-details">
-              <div class="section-title">Ingredients (Left)</div>
-              <textarea
-                class="edit-box"
-                .value="${ingredients}"
-                @input="${(e: Event) => {
-                  const target = e.target as HTMLTextAreaElement;
-                  this.state = { ...this.state, ingredients: target.value };
-                }}"
-                multiline
-                placeholder="Enter ingredients..."
-              ></textarea>
+    const recipeSection = this.state.ingredients || this.state.instructions
+      ? html`
+          <div class="recipe-details">
+            <div class="section-title">Ingredients (Left)</div>
+            <textarea
+              class="edit-box"
+              .value="${ingredients}"
+              @input="${(e: Event) => {
+                const target = e.target as HTMLTextAreaElement;
+                this.state = { ...this.state, ingredients: target.value };
+              }}"
+              multiline
+              placeholder="Enter ingredients..."
+            ></textarea>
 
-              <div class="section-title">Instructions (Right)</div>
-              <textarea
-                class="edit-box"
-                .value="${instructions}"
-                @input="${(e: Event) => {
-                  const target = e.target as HTMLTextAreaElement;
-                  this.state = { ...this.state, instructions: target.value };
-                }}"
-                multiline
-                placeholder="Enter instructions..."
-              ></textarea>
+            <div class="section-title">Instructions (Right)</div>
+            <textarea
+              class="edit-box"
+              .value="${instructions}"
+              @input="${(e: Event) => {
+                const target = e.target as HTMLTextAreaElement;
+                this.state = { ...this.state, instructions: target.value };
+              }}"
+              multiline
+              placeholder="Enter instructions..."
+            ></textarea>
 
-              <button class="save-button">Save Recipe</button>
-            </div>
-          `
-        : null;
+            <button class="save-button">Save Recipe</button>
+          </div>
+        `
+      : null;
 
     return html`
       <div class="import-page">

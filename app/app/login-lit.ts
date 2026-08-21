@@ -11,16 +11,13 @@ export class LoginScreen extends LitElement {
     isSubmitting: { state: true },
   };
 
-  constructor() {
-    super();
-    this.username = "";
-    this.password = "";
-    this.isRegistering = false;
-    this.error = "";
-    this.isSubmitting = false;
-  }
+  username = "";
+  password = "";
+  isRegistering = false;
+  error = "";
+  isSubmitting = false;
 
-  async handleSubmit(e) {
+  async handleSubmit(e: Event) {
     e.preventDefault();
     if (this.isSubmitting) return;
 
@@ -58,8 +55,8 @@ export class LoginScreen extends LitElement {
             placeholder="Username"
             autocomplete="username"
             .value="${username}"
-            @input="${(e) => {
-              this.username = e.target.value;
+            @input="${(e: Event) => {
+              this.username = (e.target as HTMLInputElement).value;
             }}"
           />
 
@@ -69,8 +66,8 @@ export class LoginScreen extends LitElement {
             placeholder="Password"
             autocomplete="current-password"
             .value="${password}"
-            @input="${(e) => {
-              this.password = e.target.value;
+            @input="${(e: Event) => {
+              this.password = (e.target as HTMLInputElement).value;
             }}"
           />
 

@@ -1,19 +1,23 @@
 import { html, LitElement } from "lit";
 import { router } from "../src/lib/router";
 
-export class NewRecipeScreen extends LitElement {
-  constructor() {
-    super();
-    this.title = "";
-    this.description = "";
-    this.servings = "4";
-    this.prepTime = "15";
-    this.cookTime = "30";
-    this.ingredients = "";
-    this.instructions = "";
-  }
+interface NewRecipeState {
+  title: string;
+  description: string;
+  servings: string;
+  prepTime: string;
+  cookTime: string;
+  ingredients: string;
+  instructions: string;
+  isSaving: boolean;
+}
 
-  state = {
+export class NewRecipeScreen extends LitElement {
+  static properties = {
+    state: { state: true },
+  };
+
+  state: NewRecipeState = {
     title: "",
     description: "",
     servings: "4",
@@ -21,6 +25,7 @@ export class NewRecipeScreen extends LitElement {
     cookTime: "30",
     ingredients: "",
     instructions: "",
+    isSaving: false,
   };
 
   async handleSave() {
@@ -31,12 +36,12 @@ export class NewRecipeScreen extends LitElement {
 
     const ingredientLines = this.state.ingredients
       .split("\n")
-      .filter((l: string) => l.trim())
-      .map((i: string) => ({ name: i.trim(), quantity: "", unit: "" }));
+      .filter((l) => l.trim())
+      .map((i) => ({ name: i.trim(), quantity: "", unit: "" }));
     const instructionLines = this.state.instructions
       .split("\n")
-      .filter((l: string) => l.trim())
-      .map((i: string, idx: number) => ({
+      .filter((l) => l.trim())
+      .map((i, idx) => ({
         step_number: idx + 1,
         text: i.trim(),
       }));
@@ -133,7 +138,6 @@ export class NewRecipeScreen extends LitElement {
             }}"
             keyboardType="numeric"
           />
-          </div>
         </div>
 
         <div class="form-group">

@@ -9,13 +9,10 @@ export class RecipeDetailScreen extends LitElement {
     error: { state: true },
   };
 
-  constructor() {
-    super();
-    this.recipeId = "";
-    this.selectedRecipe = null;
-    this.isLoading = true;
-    this.error = "";
-  }
+  recipeId = "";
+  selectedRecipe: any = null;
+  isLoading = true;
+  error = "";
 
   connectedCallback() {
     super.connectedCallback();
@@ -61,13 +58,13 @@ export class RecipeDetailScreen extends LitElement {
         <h3>Ingredients</h3>
         <ul class="recipe-list">
           ${(ingredients || []).map(
-            (ing) => html`<li>${ing.quantity} ${ing.unit} ${ing.name}</li>`
+            (ing: any) => html`<li>${ing.quantity} ${ing.unit} ${ing.name}</li>`
           )}
         </ul>
 
         <h3>Instructions</h3>
         <ol>
-          ${(instructions || []).map((inst) => html`<li>${inst.text}</li>`)}
+          ${(instructions || []).map((inst: any) => html`<li>${inst.text}</li>`)}
         </ol>
       </div>
     `;

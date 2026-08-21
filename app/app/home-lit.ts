@@ -10,12 +10,9 @@ export class HomeScreen extends LitElement {
     error: { state: true },
   };
 
-  constructor() {
-    super();
-    this.recipes = [];
-    this.isLoading = true;
-    this.error = "";
-  }
+  recipes: any[] = [];
+  isLoading = true;
+  error = "";
 
   connectedCallback() {
     super.connectedCallback();
@@ -63,7 +60,7 @@ export class HomeScreen extends LitElement {
 
         <ul class="recipe-list">
           ${recipes.map(
-            (r) => html`
+            (r: any) => html`
               <li class="recipe-card">
                 <a href="/recipe/${r.id}">
                   <h2>${r.title}</h2>
