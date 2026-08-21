@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RecipeVault</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #f6f7f9;
+      color: #1a1a1a;
+    }
+    main {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 24px 16px 64px;
+    }
+    a { color: #2e7d32; }
+    .input-field, .textarea-field, .edit-box {
+      width: 100%;
+      padding: 10px 12px;
+      margin: 6px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+      background: #fff;
+      color: inherit;
+    }
+    textarea { min-height: 120px; resize: vertical; font-family: inherit; }
+    .button, .save-button {
+      display: inline-block;
+      background: #2e7d32;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .button:disabled { opacity: 0.5; cursor: not-allowed; }
+    .button.secondary { background: #555; }
+    .toggle-button, .back-link {
+      background: none;
+      border: none;
+      color: #2e7d32;
+      cursor: pointer;
+      font-size: 14px;
+      margin-top: 12px;
+      display: inline-block;
+      padding: 0;
+    }
+    .error { color: #c62828; }
+    .muted { color: #767676; }
+    .recipe-card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 12px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+    .recipe-card h2 { margin: 0 0 4px; font-size: 18px; }
+    .recipe-card a { text-decoration: none; color: inherit; display: block; }
+    .recipe-list { list-style: none; padding: 0; margin: 16px 0; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-weight: 600; margin-bottom: 4px; }
+    .form-row { display: flex; gap: 12px; }
+    .form-row .form-group { flex: 1; }
+    .home-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .home-actions { display: flex; gap: 8px; align-items: center; }
+  </style>
+</head>
+<body>
+  <main id="app"></main>
+  <script type="module">
+    import { html } from "lit";
+    import { router } from "./src/lib/router";
+    import { authStore } from "./src/lib/authStore";
+    import { api } from "./src/lib/api";
+    import "./login-lit.ts";
+    import "./home-lit.ts";
+    import "./import-lit.ts";
+    import "./new-recipe-lit.ts";
+    import "./recipe-detail-lit.ts";
+
+    const isAuthed = () => authStore.isAuthenticated;
+
+    authStore.restoreSession();
+
+    api.setUnauthorizedHandler(() => {
+      authStore.logout();
+      router.navigate("/login", { replace: true });
+    });
+
+    router.init({
+      outlet: document.getElementById("app"),
+      routes: [
+        {
+          path: "/",
+          title: "My Recipes",
+          guard: isAuthed,
+          render: () => html`<home-screen></home-screen>`,
+        },
+        {
+          path: "/login",
+          title: "Login",
+          guard: () => !isAuthed(),
+          redirectTo: "/",
+          render: () => html`<login-screen></login-screen>`,
+        },
+        {
+          path: "/import",
+          title: "Scan Recipe",
+          guard: isAuthed,
+          render: () => html`<import-screen></import-screen>`,
+        },
+        {
+          path: "/new-recipe",
+          title: "New Recipe",
+          guard: isAuthed,
+          render: () => html`<new-recipe-screen></new-recipe-screen>`,
+        },
+        {
+          path: "/recipe/:id",
+          title: "Recipe Details",
+          guard: isAuthed,
+          render: (ctx) =>
+            html`<recipe-detail-screen .recipeId=${ctx.params.id}></recipe-detail-screen>`,
+        },
+      ],
+    });
+  </script>
+</body>
+</html>

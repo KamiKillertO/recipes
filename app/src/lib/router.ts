@@ -1,5 +1,5 @@
 import { render, type TemplateResult } from "lit";
-import { useAuthStore } from "./authStore";
+import { authStore } from "./authStore";
 
 export const REDIRECT_KEY = "auth.redirectTo";
 
@@ -97,7 +97,7 @@ export class AppRouter {
 
     if (!matched) {
       return this.navigate(
-        useAuthStore.getState().isAuthenticated ? "/" : "/login",
+        authStore.isAuthenticated ? "/" : "/login",
         { replace: true }
       );
     }
