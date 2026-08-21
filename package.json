@@ -3,12 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start:web": "cd app && npx vite",
+    "start:web": "nx run app:serve",
     "start:api": "cd api && go run ./cmd/api",
     "start:all": "npm run docker:up && concurrently \"npm run start:api\" \"npm run start:web\"",
-    "build": "npm run build:api && npm run build:app",
+    "build": "npm run build:api && nx run app:build",
     "build:api": "cd api && go build -o bin/api ./cmd/api",
-    "build:app": "cd app && npx vite build",
+    "build:app": "nx run app:build",
     "test": "npm run test:api",
     "test:api": "cd api && go test ./...",
     "docker:up": "docker compose -f docker/docker-compose.yml up -d",
@@ -20,14 +20,28 @@
   "devDependencies": {
     "@nx-go/nx-go": "^4.0.0",
     "@nx/docker": "22.7.1",
+    "@nx/js": "22.7.1",
     "@nx/react-native": "22.7.1",
+    "@nx/vite": "^22.7.1",
+    "@nx/web": "22.7.1",
+    "@swc-node/register": "~1.11.1",
+    "@swc/core": "~1.15.5",
+    "@swc/helpers": "~0.5.18",
+    "@vitest/ui": "~4.1.0",
     "concurrently": "^9.1.0",
-    "nx": "22.7.1"
+    "jiti": "2.4.2",
+    "jsdom": "~22.1.0",
+    "nx": "22.7.1",
+    "prettier": "~3.6.2",
+    "typescript": "~5.9.2",
+    "vite": "^8.0.0",
+    "vitest": "~4.1.0"
   },
   "nx": {},
   "allowScripts": {
     "nx@22.7.1": true,
     "dtrace-provider@0.8.8": true,
     "unrs-resolver@1.11.1": true
-  }
+  },
+  "dependencies": {}
 }

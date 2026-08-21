@@ -2,10 +2,12 @@
   "name": "app",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev": "nx run app:serve",
+    "build": "nx run app:build",
+    "lint": "nx run app:lint",
+    "preview": "nx run app:preview"
   },
   "dependencies": {
     "lit": "^3.2.0",
@@ -13,10 +15,12 @@
     "zustand": "^5.0.13"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@types/node": "^20.19.43",
+    "eslint": "^10.8.1",
+    "eslint-plugin-lit": "^2.3.1",
+    "globals": "^17.11.0",
     "typescript": "^5.7.2",
-    "vite": "^5.2.0",
-    "vite-plugin-dts": "^3.9.0",
-    "vite-tsconfig-paths": "^6.1.1"
+    "typescript-eslint": "^8.67.0"
   }
 }
