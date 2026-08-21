@@ -129,3 +129,5 @@ yarn-error.log
 ## Nested node_modules
 
 node_modules/
+
+vite.config.*.timestamp*
