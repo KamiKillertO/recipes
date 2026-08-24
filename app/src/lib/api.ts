@@ -41,7 +41,7 @@ export class ApiClient {
       headers["Authorization"] = `Bearer ${this.token}`;
     }
 
-    const response = await fetch(`${baseUrl}${endpoint}`, {
+    const response = await fetch(endpoint, {
       ...options,
       headers,
       signal: AbortSignal.timeout(this.timeoutMs),
@@ -131,7 +131,7 @@ export class ApiClient {
       headers["Authorization"] = `Bearer ${this.token}`;
     }
 
-    const response = await fetch(`${baseUrl}/api/ocr`, {
+    const response = await fetch("/api/ocr", {
       method: "POST",
       body: formData as any,
       headers,
