@@ -44,8 +44,6 @@ function persistUser(user: AuthUser | null) {
   userSignal.value = user;
 }
 
-api.setToken(tokenSignal.value);
-
 export const authStore = {
   get token() { return tokenSignal.value; },
   get user() { return userSignal.value; },
