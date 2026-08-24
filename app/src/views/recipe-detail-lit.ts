@@ -1,6 +1,6 @@
 import { html, LitElement } from 'lit';
-import { api } from './src/lib/api';
-import { authStore } from './src/lib/authStore';
+import { api } from '../lib/api';
+import { authStore } from '../lib/authStore';
 
 export class RecipeDetailScreen extends LitElement {
   static properties = {

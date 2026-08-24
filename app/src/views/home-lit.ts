@@ -1,7 +1,7 @@
 import { html, LitElement } from 'lit';
-import { api } from './src/lib/api';
-import { authStore } from './src/lib/authStore';
-import { router } from './src/lib/router';
+import { api } from '../lib/api';
+import { authStore } from '../lib/authStore';
+import { router } from '../lib/router';
 
 export class HomeScreen extends LitElement {
   static properties = {

@@ -4,7 +4,12 @@ export default defineConfig({
   root: `${import.meta.dirname}/src`,
   server: {
     port: 8081,
-    host: true
+    host: true,
+    fs: {
+    	allow: [
+		`${import.meta.dirname}/src`
+	]
+    }
   },
   build: {
     outDir: "dist",

@@ -83,14 +83,14 @@
   <main id="app"></main>
   <script type="module">
     import { html } from "lit";
-    import { router } from "./src/lib/router";
-    import { authStore } from "./src/lib/authStore";
-    import { api } from "./src/lib/api";
-    import "./login-lit.ts";
-    import "./home-lit.ts";
-    import "./import-lit.ts";
-    import "./new-recipe-lit.ts";
-    import "./recipe-detail-lit.ts";
+    import { router } from "./lib/router";
+    import { authStore } from "./lib/authStore";
+    import { api } from "./lib/api";
+    import "./views/login-lit.ts";
+    import "./views/home-lit.ts";
+    import "./views/import-lit.ts";
+    import "./views/new-recipe-lit.ts";
+    import "./views/recipe-detail-lit.ts";
 
     const isAuthed = () => authStore.isAuthenticated;
 

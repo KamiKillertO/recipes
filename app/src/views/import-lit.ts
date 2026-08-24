@@ -1,6 +1,6 @@
 import { html, LitElement } from 'lit';
-import { router } from './src/lib/router';
-import { authStore } from './src/lib/authStore';
+import { router } from '../lib/router';
+import { authStore } from '../lib/authStore';
 
 interface ImportState {
   image: string | null;

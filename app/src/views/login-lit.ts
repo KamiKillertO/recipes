@@ -1,6 +1,6 @@
 import { html, LitElement } from 'lit';
-import { authStore } from './src/lib/authStore';
-import { router, REDIRECT_KEY } from './src/lib/router';
+import { authStore } from '../lib/authStore';
+import { router, REDIRECT_KEY } from '../lib/router';
 
 export class LoginScreen extends LitElement {
   static properties = {
