@@ -13,8 +13,8 @@ RUN npm ci
 # Copy source
 COPY . .
 
-# Build the app
-RUN npx nx run app:build
+# Build the app directly with vite (bypasses Nx Go plugin)
+RUN npx vite build --config app/vite.config.ts
 
 # Production stage - serve with nginx
 FROM nginx:alpine
