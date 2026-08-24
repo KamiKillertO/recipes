@@ -3,7 +3,7 @@
   "$schema": "../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "src",
   "projectType": "application",
-"targets": {
+  "targets": {
     "serve": {
       "executor": "@nx/vite:dev-server",
       "options": {
@@ -16,6 +16,24 @@
       "executor": "@nx/eslint:lint",
       "options": {
         "lintFilePatterns": ["{projectRoot}/**/*.{js,ts}"]
+      }
+    },
+    "docker:build": {
+      "executor": "@nx/docker:build",
+      "options": {
+        "file": "docker/Dockerfile.web",
+        "context": "..",
+        "tag": "recipevault-web"
+      }
+    },
+    "docker:run": {
+      "executor": "@nx/docker:run",
+      "options": {
+        "image": "recipevault-web",
+        "ports": ["8081:8081"],
+        "env": {
+          "VITE_API_URL": "http://api:8080"
+        }
       }
     }
   }
