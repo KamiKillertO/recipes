@@ -5,7 +5,6 @@ WORKDIR /app
 
 # Copy package files
 COPY package.json package-lock.json ./
-COPY app/package.json app/package-lock.json ./app/
 
 # Install dependencies
 RUN npm ci
@@ -20,7 +19,7 @@ RUN npx nx run app:build
 FROM nginx:alpine
 
 # Copy built assets
-COPY --from=builder /app/app/dist /usr/share/nginx/html
+COPY --from=builder /app/dist /usr/share/nginx/html
 
 # Copy nginx config
 COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
