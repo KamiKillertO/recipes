@@ -1,3 +1,5 @@
+const DEFAULT_TIMEOUT_MS = 30_000;
+
 export interface AuthResponse {
   token: string;
   user: {
@@ -12,6 +14,7 @@ const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:8080";
 export class ApiClient {
   private token: string | null = null;
   private onUnauthorized: (() => void) | null = null;
+  private timeoutMs: number = DEFAULT_TIMEOUT_MS;
 
   setToken(token: string | null) {
     this.token = token;
@@ -19,6 +22,10 @@ export class ApiClient {
 
   setUnauthorizedHandler(handler: (() => void) | null) {
     this.onUnauthorized = handler;
+  }
+
+  setTimeout(timeoutMs: number) {
+    this.timeoutMs = timeoutMs;
   }
 
   private async request<T>(
@@ -37,6 +44,7 @@ export class ApiClient {
     const response = await fetch(`${baseUrl}${endpoint}`, {
       ...options,
       headers,
+      signal: AbortSignal.timeout(this.timeoutMs),
     });
 
     if (!response.ok) {
@@ -127,6 +135,7 @@ export class ApiClient {
       method: "POST",
       body: formData as any,
       headers,
+      signal: AbortSignal.timeout(this.timeoutMs),
     });
 
     if (!response.ok) {
