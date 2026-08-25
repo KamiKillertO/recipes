@@ -9,10 +9,13 @@ export class RecipeDetailScreen extends LitElement {
     error: { state: true },
   };
 
-  recipeId = '';
-  selectedRecipe: any = null;
-  isLoading = true;
-  error = '';
+  constructor() {
+	  super();
+	  this.recipeId = '';
+	  this.selectedRecipe = null;
+  	  this.isLoading = true;
+  	  this.error = '';
+  }
 
   connectedCallback() {
     super.connectedCallback();

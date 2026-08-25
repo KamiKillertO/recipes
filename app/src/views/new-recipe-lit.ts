@@ -18,16 +18,19 @@ export class NewRecipeScreen extends LitElement {
     state: { state: true },
   };
 
-  state: NewRecipeState = {
-    title: '',
-    description: '',
-    servings: '4',
-    prepTime: '15',
-    cookTime: '30',
-    ingredients: '',
-    instructions: '',
-    isSaving: false,
-  };
+  constructor() {
+	  super();
+	  this.state = {
+		  title: '',
+		  description: '',
+		  servings: '4',
+		  prepTime: '15',
+		  cookTime: '30',
+		  ingredients: '',
+		  instructions: '',
+		  isSaving: false,
+	  } as NewRecipeState;
+  }
 
   connectedCallback() {
     super.connectedCallback();

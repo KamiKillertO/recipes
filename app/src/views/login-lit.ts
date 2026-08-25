@@ -11,7 +11,7 @@ export class LoginScreen extends LitElement {
     isSubmitting: { state: true },
   };
 
-  consturctor() {
+  constructor() {
 	  super();
   	this.username = '';
   	this.password = '';

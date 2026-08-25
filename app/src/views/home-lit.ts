@@ -10,9 +10,12 @@ export class HomeScreen extends LitElement {
     error: { state: true },
   };
 
-  recipes: any[] = [];
-  isLoading = true;
-  error = '';
+  constructor() {
+	super();
+	this.recipes = [];
+  	this.isLoading = true;
+  	this.error = '';
+  }
 
   connectedCallback() {
     super.connectedCallback();
