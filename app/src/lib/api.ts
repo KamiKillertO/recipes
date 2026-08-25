@@ -9,8 +9,6 @@ export interface AuthResponse {
   };
 }
 
-const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:8080";
-
 export class ApiClient {
   private token: string | null = null;
   private onUnauthorized: (() => void) | null = null;

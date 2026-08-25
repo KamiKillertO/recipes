@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "dev:web": "nx run app:serve",
+    "dev:api": "cd api && go run ./cmd/api",
+    "dev": "concurrently \"npm run dev:api\" \"npm run dev:web\"",
     "start:web": "nx run app:serve",
     "start:api": "cd api && go run ./cmd/api",
     "start:all": "npm run docker:up && concurrently \"npm run start:api\" \"npm run start:web\"",
@@ -14,8 +17,7 @@
     "docker:up": "docker compose -f docker/docker-compose.yml up -d",
     "docker:down": "docker compose -f docker/docker-compose.yml down",
     "docker:logs": "docker compose -f docker/docker-compose.yml logs -f",
-    "docker:rebuild": "docker compose -f docker/docker-compose.yml up -d --build",
-    "dev": "npm run start:all"
+    "docker:rebuild": "docker compose -f docker/docker-compose.yml up -d --build"
   },
   "devDependencies": {
     "@nx-go/nx-go": "^4.0.0",
