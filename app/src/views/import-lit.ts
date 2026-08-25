@@ -105,36 +105,35 @@ export class ImportScreen extends LitElement {
 
     const imageSection = !image
       ? html`
-          <button class="pick-image-button" @click="${this.handlePickImage}">
+          <button @click="${this.handlePickImage}">
             Take Photo
           </button>
         `
       : html`
-          <div class="image-preview">
+          <div>
             <img
               src="${image}"
               style="width: 100%; height: 100%; object-fit: contain"
             />
-            <div class="overlay-controls">
-              <div class="divider-line"></div>
-              <div class="flex-row justify-between padding-16">
-                <span class="small-text">Left: Ingredients</span>
-                <span class="small-text">Right: Instructions</span>
+            <div>
+              <div></div>
+              <div>
+                <span>Left: Ingredients</span>
+                <span>Right: Instructions</span>
               </div>
-              <div class="flex-row gap-12">
-                <button class="button secondary" @click="${this.handlePickImage}">
+              <div>
+                <button @click="${this.handlePickImage}">
                   Retake
                 </button>
                 <button
-                  class="button ${isProcessing ? 'button-disabled' : ''}"
                   @click="${this.handleProcessImage}"
                   ?disabled="${isProcessing}"
                 >
                   ${isProcessing ? 'Processing...' : 'Process'}
                 </button>
               </div>
-              <div class="flex-row gap-12 padding-16">
-                <button class="button">Save Recipe</button>
+              <div>
+                <button>Save Recipe</button>
               </div>
             </div>
           </div>
@@ -142,10 +141,9 @@ export class ImportScreen extends LitElement {
 
     const recipeSection = this.state.ingredients || this.state.instructions
       ? html`
-          <div class="recipe-details">
-            <div class="section-title">Ingredients (Left)</div>
+          <div>
+            <div>Ingredients (Left)</div>
             <textarea
-              class="edit-box"
               .value="${ingredients}"
               @input="${(e: Event) => {
                 const target = e.target as HTMLTextAreaElement;
@@ -155,9 +153,8 @@ export class ImportScreen extends LitElement {
               placeholder="Enter ingredients..."
             ></textarea>
 
-            <div class="section-title">Instructions (Right)</div>
+            <div>Instructions (Right)</div>
             <textarea
-              class="edit-box"
               .value="${instructions}"
               @input="${(e: Event) => {
                 const target = e.target as HTMLTextAreaElement;
@@ -167,13 +164,13 @@ export class ImportScreen extends LitElement {
               placeholder="Enter instructions..."
             ></textarea>
 
-            <button class="save-button">Save Recipe</button>
+            <button>Save Recipe</button>
           </div>
         `
       : null;
 
     return html`
-      <div class="import-page">
+      <div>
         ${imageSection}
         ${recipeSection}
       </div>

@@ -81,11 +81,10 @@ export class NewRecipeScreen extends LitElement {
     const { title, description, servings, prepTime, cookTime, ingredients, instructions } = this.state;
 
     return html`
-      <div class="new-recipe-page">
-        <div class="form-group">
+      <div>
+        <div>
           <label>Title *</label>
           <input
-            class="input-field"
             .value="${title}"
             @input="${(e: Event) => {
               const target = e.target as HTMLInputElement;
@@ -95,10 +94,9 @@ export class NewRecipeScreen extends LitElement {
           />
         </div>
 
-        <div class="form-group">
+        <div>
           <label>Description</label>
           <input
-            class="input-field"
             .value="${description}"
             @input="${(e: Event) => {
               const target = e.target as HTMLInputElement;
@@ -110,11 +108,10 @@ export class NewRecipeScreen extends LitElement {
           />
         </div>
 
-        <div class="form-row">
-          <div class="form-group">
+        <div>
+          <div>
             <label>Servings</label>
             <input
-              class="input-field"
               type="number"
               .value="${servings}"
               @input="${(e: Event) => {
@@ -124,10 +121,9 @@ export class NewRecipeScreen extends LitElement {
               keyboardType="numeric"
             />
           </div>
-          <div class="form-group">
+          <div>
             <label>Prep (min)</label>
             <input
-              class="input-field"
               type="number"
               .value="${prepTime}"
               @input="${(e: Event) => {
@@ -139,10 +135,9 @@ export class NewRecipeScreen extends LitElement {
           </div>
         </div>
 
-        <div class="form-group">
+        <div>
           <label>Cook (min)</label>
           <input
-            class="input-field"
             type="number"
             .value="${cookTime}"
             @input="${(e: Event) => {
@@ -153,10 +148,9 @@ export class NewRecipeScreen extends LitElement {
           />
         </div>
 
-        <div class="form-group">
+        <div>
           <label>Ingredients (one per line)</label>
           <textarea
-            class="textarea-field"
             .value="${ingredients}"
             @input="${(e: Event) => {
               const target = e.target as HTMLTextAreaElement;
@@ -167,10 +161,9 @@ export class NewRecipeScreen extends LitElement {
           ></textarea>
         </div>
 
-        <div class="form-group">
+        <div>
           <label>Instructions (one per line)</label>
           <textarea
-            class="textarea-field"
             .value="${instructions}"
             @input="${(e: Event) => {
               const target = e.target as HTMLTextAreaElement;
@@ -181,7 +174,7 @@ export class NewRecipeScreen extends LitElement {
           ></textarea>
         </div>
 
-        <button class="save-button" @click="${this.handleSave}">
+        <button @click="${this.handleSave}">
           ${this.state.isSaving ? 'Saving...' : 'Save Recipe'}
         </button>
       </div>

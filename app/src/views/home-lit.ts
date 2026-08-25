@@ -49,27 +49,27 @@ export class HomeScreen extends LitElement {
     const { recipes, isLoading, error } = this;
 
     return html`
-      <div class="home-page">
-        <header class="home-header">
+      <div>
+        <header>
           <h1>My Recipes</h1>
-          <div class="home-actions">
-            <a href="/new-recipe" class="button">New Recipe</a>
-            <a href="/import" class="button secondary">Scan Recipe</a>
-            <button class="toggle-button" @click="${this._logout}">Logout</button>
+          <div>
+            <a href="/new-recipe">New Recipe</a>
+            <a href="/import">Scan Recipe</a>
+            <button @click="${this._logout}">Logout</button>
           </div>
         </header>
 
-        ${isLoading ? html`<p class="muted">Loading recipes...</p>` : ''}
-        ${error ? html`<p class="error">${error}</p>` : ''}
+        ${isLoading ? html`<p>Loading recipes...</p>` : ''}
+        ${error ? html`<p>${error}</p>` : ''}
 
         ${!isLoading && !error && recipes.length === 0
-          ? html`<p class="muted">No recipes yet. Create your first one!</p>`
+          ? html`<p>No recipes yet. Create your first one!</p>`
           : ''}
 
-        <ul class="recipe-list">
+        <ul>
           ${recipes.map(
             (r: any) => html`
-              <li class="recipe-card">
+              <li>
                 <a href="/recipe/${r.id}">
                   <h2>${r.title}</h2>
                   ${r.description ? html`<p>${r.description}</p>` : ''}

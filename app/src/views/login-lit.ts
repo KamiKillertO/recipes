@@ -55,14 +55,13 @@ export class LoginScreen extends LitElement {
     const { username, password, isRegistering, error, isSubmitting } = this;
 
     return html`
-      <div class="login-page">
+      <div>
         <h2>${isRegistering ? 'Register' : 'Login'}</h2>
 
-        ${error ? html`<p class="error">${error}</p>` : null}
+        ${error ? html`<p>${error}</p>` : null}
 
         <form @submit="${this.handleSubmit}">
           <input
-            class="input-field"
             placeholder="Username"
             autocomplete="username"
             .value="${username}"
@@ -72,7 +71,6 @@ export class LoginScreen extends LitElement {
           />
 
           <input
-            class="input-field"
             type="password"
             placeholder="Password"
             autocomplete="current-password"
@@ -83,7 +81,6 @@ export class LoginScreen extends LitElement {
           />
 
           <button
-            class="button"
             type="submit"
             ?disabled="${isSubmitting || !username || !password}"
           >
@@ -92,7 +89,6 @@ export class LoginScreen extends LitElement {
         </form>
 
         <button
-          class="toggle-button"
           @click="${() => {
             this.isRegistering = !isRegistering;
             this.error = '';

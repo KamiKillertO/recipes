@@ -47,25 +47,25 @@ export class RecipeDetailScreen extends LitElement {
 
   render() {
     if (this.isLoading) {
-      return html`<div class="loading">Loading recipe...</div>`;
+      return html`<div>Loading recipe...</div>`;
     }
     if (this.error) {
-      return html`<div class="error">${this.error}</div>`;
+      return html`<div>${this.error}</div>`;
     }
     if (!this.selectedRecipe) {
-      return html`<div class="muted">Recipe not found.</div>`;
+      return html`<div>Recipe not found.</div>`;
     }
 
     const { title, description, ingredients, instructions } = this.selectedRecipe;
 
     return html`
-      <div class="recipe-detail-page">
-        <a class="back-link" href="/">&larr; Back to recipes</a>
+      <div>
+        <a href="/">&larr; Back to recipes</a>
         <h2>${title}</h2>
         ${description ? html`<p>${description}</p>` : ''}
 
         <h3>Ingredients</h3>
-        <ul class="recipe-list">
+        <ul>
           ${(ingredients || []).map(
             (ing: any) => html`<li>${ing.quantity} ${ing.unit} ${ing.name}</li>`
           )}
