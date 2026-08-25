@@ -45,18 +45,6 @@
     "test:api": {
       "cache": true
     },
-    "docker:up": {
-      "cache": true
-    },
-    "docker:down": {
-      "cache": true
-    },
-    "docker:logs": {
-      "cache": true
-    },
-    "docker:rebuild": {
-      "cache": true
-    },
     "dev": {
       "cache": true
     }
