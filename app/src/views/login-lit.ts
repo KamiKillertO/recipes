@@ -11,11 +11,14 @@ export class LoginScreen extends LitElement {
     isSubmitting: { state: true },
   };
 
-  username = '';
-  password = '';
-  isRegistering = false;
-  error = '';
-  isSubmitting = false;
+  consturctor() {
+	  super();
+  	this.username = '';
+  	this.password = '';
+  	this.isRegistering = false;
+  	this.error = '';
+  	this.isSubmitting = false;
+  }
 
   connectedCallback() {
     super.connectedCallback();
