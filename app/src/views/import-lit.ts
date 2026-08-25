@@ -1,6 +1,7 @@
 import { html, LitElement } from 'lit';
 import { router } from '../lib/router';
 import { authStore } from '../lib/authStore';
+import { api } from '../lib/api';
 
 interface ImportState {
   image: string | null;
@@ -44,21 +45,9 @@ export class ImportScreen extends LitElement {
     if (!this.state.image) return;
     this.state = { ...this.state, isProcessing: true };
     try {
-      const formData = new FormData();
-      formData.append('image', {
-        uri: this.state.image,
-        name: 'photo.jpg',
-        type: 'image/jpeg',
-      } as any);
 
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
-      const response = await fetch(`${API_URL}/api/ocr`, {
-        method: 'POST',
-        body: formData,
-      });
+      const data = await api.processOCR(this.state.image); 
 
-      if (!response.ok) throw new Error('OCR failed');
-      const data = await response.json();
       this.state = {
         ...this.state,
         ingredients: data.ingredients || '',
