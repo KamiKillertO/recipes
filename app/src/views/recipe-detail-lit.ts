@@ -1,6 +1,5 @@
 import { html, LitElement } from 'lit';
 import { api } from '../lib/api';
-import { authStore } from '../lib/authStore';
 
 export class RecipeDetailScreen extends LitElement {
   static properties = {
@@ -17,16 +16,12 @@ export class RecipeDetailScreen extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.unsub = authStore.subscribe(() => this.requestUpdate());
     this.loadRecipe();
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    this.unsub?.();
   }
-
-  private unsub?: () => void;
 
   async loadRecipe() {
     if (!this.recipeId) {
