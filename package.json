@@ -29,7 +29,7 @@
     "concurrently": "^9.1.0",
     "metro-config": "~0.83.0",
     "metro-resolver": "~0.83.0",
-    "nx": "22.7.1"
+    "nx": "22.7.7"
   },
   "dependencies": {
     "expo": "~54.0.0",
