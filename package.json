@@ -23,7 +23,7 @@
   "devDependencies": {
     "@expo/cli": "~54.0.16",
     "@nx-go/nx-go": "^4.0.0",
-    "@nx/docker": "22.7.1",
+    "@nx/docker": "22.7.8",
     "@nx/expo": "22.7.1",
     "@nx/react-native": "22.7.1",
     "concurrently": "^9.1.0",
